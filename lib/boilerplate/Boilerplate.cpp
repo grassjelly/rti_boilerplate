@@ -211,38 +211,9 @@ int Subscriber::init_subscriber()
     topic = boiler_participant_.participant_->create_topic(
         user_topic_,
         type_name, DDS_TOPIC_QOS_DEFAULT, NULL /* listener */,
-        DDS_STATUS_MASK_NONE);    // y.publish();
-
+        DDS_STATUS_MASK_NONE);    
     if (topic == NULL) {
-        printf("create_topic error\n");class SensorsListener : public DDSDataReaderListener 
-            {
-                public:
-                    virtual void on_requested_deadline_missed(
-                        DDSDataReader* /*reader*/,
-                        const DDS_RequestedDeadlineMissedStatus& /*status*/) {}
-
-                    virtual void on_requested_incompatible_qos(
-                        DDSDataReader* /*reader*/,
-                        const DDS_RequestedIncompatibleQosStatus& /*status*/) {}
-
-                    virtual void on_sample_rejected(
-                        DDSDataReader* /*reader*/,
-                        const DDS_SampleRejectedStatus& /*status*/) {}
-
-                    virtual void on_liveliness_changed(
-                        DDSDataReader* /*reader*/,
-                        const DDS_LivelinessChangedStatus& /*status*/) {}
-
-                    virtual void on_sample_lost(
-                        DDSDataReader* /*reader*/,
-                        const DDS_SampleLostStatus& /*status*/) {}
-
-                    virtual void on_subscription_matched(
-                        DDSDataReader* /*reader*/,
-                        const DDS_SubscriptionMatchedStatus& /*status*/) {}
-
-                    virtual void on_data_available(DDSDataReader* reader);
-            };
+        printf("create_topic error\n");
         boiler_participant_.node_shutdown();
         return -1;
     }

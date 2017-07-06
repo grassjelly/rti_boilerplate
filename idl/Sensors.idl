@@ -1,0 +1,7 @@
+// HelloWorld.idl
+struct Sensors
+{
+    string<50> id;
+    string<50> type;
+    float value;
+};

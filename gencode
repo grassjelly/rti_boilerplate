@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+#delete previous gencode
+rm lib/gen/*.h
+rm lib/gen/*.cxx
+rm lib/gen/*.xml
+
+#get the new idl file created
+CURRENT_IDL=$(basename ./idl/*.idl .idl)
+#get prev idl file 
+PREV_IDL=$(head -n 1 gencode.cache)
+
+#generate codes
+cd lib/gen
+rtiddsgen -replace -language C++ -example x64Linux3gcc4.8.2 ../../idl/*.idl -d ./
+
+cd ../..
+#change the filenames on CMakeLists based on newly generated codes
+perl -pi -e "s/$PREV_IDL/$CURRENT_IDL/g" CMakeLists.txt
+
+#change library name based on idl
+perl -pi -e "s/$PREV_IDL_lib/$CURRENT_IDL_lib/g" CMakeLists.txt
+
+
+#store the previous idl name so the bash file knows what to replace next call
+perl -pi -e "s/$PREV_IDL/$CURRENT_IDL/g" gencode.cache
+
+#move generated header files to include folder
+if [ ! -d "include" ]; then
+	mkdir include
+fi
+
+
+#delete created makefile
+rm	lib/gen/make*
+
+rm -rf build
+mkdir build
+
+./compile

@@ -62,7 +62,7 @@ int Publisher::init_publisher()
     DDSTopic *topic = NULL;
     DDSDataWriter *writer = NULL;
     Sensors_writer_ = NULL;
-    instance_ = NULL;
+    instance = NULL;
     instance_handle_ = DDS_HANDLE_NIL;
     const char *type_name = NULL;
 
@@ -118,8 +118,8 @@ int Publisher::init_publisher()
     }
 
     /* Create data sample for writing */
-    instance_ = SensorsTypeSupport::create_data();
-    if (instance_ == NULL) {
+    instance = SensorsTypeSupport::create_data();
+    if (instance == NULL) {
         printf("SensorsTypeSupport::create_data error\n");
         boiler_participant_.node_shutdown();
         return -1;
@@ -127,7 +127,7 @@ int Publisher::init_publisher()
 }
 
 void Publisher::publish(){
-    boiler_participant_.retcode_ = Sensors_writer_->write(*instance_, instance_handle_);
+    boiler_participant_.retcode_ = Sensors_writer_->write(*instance, instance_handle_);
 
     if (boiler_participant_.retcode_ != DDS_RETCODE_OK) {
         printf("write error %d\n", boiler_participant_.retcode_);

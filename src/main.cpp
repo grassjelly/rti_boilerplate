@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     SensorsListener *reader1;
     reader1 = new SensorsListener();
-    Subscriber sub1(participant, "Example Sensor3", reader1);
+    Subscriber sub1(participant, "Example Sensors3", reader1);
 
     SensorsListener *reader2;
     reader2 = new SensorsListener();
@@ -24,10 +24,10 @@ int main(int argc, char *argv[])
     static int counter = 0;
     while(1){
         std::cout << "Sending.." << std::endl;
-        pub1.instance_->value = 1;
+        pub1.instance->value = 1;
         pub1.publish(); 
 
-        pub2.instance_->value = 2;
+        pub2.instance->value = 2;
         pub2.publish(); 
         NDDSUtility::sleep(send_period);
     }

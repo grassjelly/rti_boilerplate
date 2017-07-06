@@ -20,7 +20,7 @@ class Publisher
         Publisher(Boilerplate& participant_object, char const * user_topic );
         int init_publisher();
         void publish();
-        Sensors *instance_;
+        Sensors *instance;
 
     private:
         char const * user_topic_;

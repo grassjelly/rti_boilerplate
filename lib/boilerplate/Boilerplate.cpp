@@ -134,11 +134,19 @@ void Publisher::publish(){
     }
 }
 
-void SensorsListener::on_data_available(DDSDataReader* reader)
+
+
+Subscriber::Subscriber(Boilerplate& participant_object, char const * user_topic) : boiler_participant_(participant_object)
+{
+    user_topic_ = user_topic;
+    init_subscriber();
+}
+
+void SensorsListener::on_data_available(DDSDataReader* reader) 
 {
     SensorsDataReader *Sensors_reader = NULL;
-    SensorsSeq data_seq;
-    DDS_SampleInfoSeq info_seq;
+    SensorsSeq data_seq_;
+    DDS_SampleInfoSeq info_seq_;    
     DDS_ReturnCode_t retcode;
     int i;
 
@@ -149,7 +157,7 @@ void SensorsListener::on_data_available(DDSDataReader* reader)
     }
 
     retcode = Sensors_reader->take(
-        data_seq, info_seq, DDS_LENGTH_UNLIMITED,
+        data_seq_, info_seq_, DDS_LENGTH_UNLIMITED,
         DDS_ANY_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 
     if (retcode == DDS_RETCODE_NO_DATA) {
@@ -159,30 +167,26 @@ void SensorsListener::on_data_available(DDSDataReader* reader)
         return;
     }
 
-    for (i = 0; i < data_seq.length(); ++i) {
-        if (info_seq[i].valid_data) {
-            printf("Received data\n");
-            SensorsTypeSupport::print_data(&data_seq[i]);
-        }
-    }
+    this->info_seq = info_seq_;
+    this->data_seq = data_seq_;
 
-    retcode = Sensors_reader->return_loan(data_seq, info_seq);
+    // for (i = 0; i < data_seq_.length(); ++i) {
+    //     if (info_seq_[i].valid_data) {
+    //         std::cout << info_seq_[i].valid_data << std::endl;
+    //         //printf("Received data\n");
+    //         //SensorsTypeSupport::print_data(&data_seq[i]);
+    //     }
+    // }
+
+    retcode = Sensors_reader->return_loan(data_seq_, info_seq_);
     if (retcode != DDS_RETCODE_OK) {
         printf("return loan error %d\n", retcode);
     }
 }
-
-Subscriber::Subscriber(Boilerplate& participant_object, char const * user_topic, SensorsListener *reader_listener) : boiler_participant_(participant_object), reader_listener_(reader_listener)
-{
-    user_topic_ = user_topic;
-    init_subscriber();
-}
-
 int Subscriber::init_subscriber()
 {
     DDSSubscriber *subscriber;
     DDSTopic *topic = NULL;
-    // SensorsListener *reader_listener;
     DDSDataReader *reader = NULL;
     const char *type_name = NULL;
 
@@ -219,17 +223,16 @@ int Subscriber::init_subscriber()
     }
 
     /* Create a data reader listener */
-    // reader_listener = new SensorsListener();
-
-    /* To customize data writer QoS, use 
+    reader_listener = new SensorsListener();
+        /* To customize data writer QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
     reader = subscriber->create_datareader(
-        topic, DDS_DATAREADER_QOS_DEFAULT, reader_listener_ /* listener */,
+        topic, DDS_DATAREADER_QOS_DEFAULT, reader_listener /* listener */,
         DDS_STATUS_MASK_ALL);
     if (reader == NULL) {
         printf("create_datareader error\n");
         boiler_participant_.node_shutdown();
-        delete reader_listener_;
+        delete reader_listener;
         return -1;
     }
 

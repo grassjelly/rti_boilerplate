@@ -29,6 +29,7 @@ class Publisher
         DDS_InstanceHandle_t instance_handle_ ;
 };
 
+
 class SensorsListener : public DDSDataReaderListener 
 {
     public:
@@ -57,20 +58,24 @@ class SensorsListener : public DDSDataReaderListener
             const DDS_SubscriptionMatchedStatus& /*status*/) {}
 
         virtual void on_data_available(DDSDataReader* reader);
+        SensorsSeq data_seq;
+        DDS_SampleInfoSeq info_seq;
 };
 
 class Subscriber
 {
     public:
-        
-        Subscriber(Boilerplate& participant_object, char const * user_topic, SensorsListener *reader_listener);
+        Subscriber(Boilerplate& participant_object, char const * user_topic);
         int init_subscriber();
+        SensorsSeq data_seq;
+                SensorsListener *reader_listener;
+
+        int * x;
 
     private:
         char const * user_topic_;
         Boilerplate& boiler_participant_;
         SensorsSeq data_seq_;
-        SensorsListener *reader_listener_;
 };
 
 #endif

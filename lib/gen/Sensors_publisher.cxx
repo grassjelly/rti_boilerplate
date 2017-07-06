@@ -98,7 +98,7 @@ extern "C" int publisher_main(int domainId, int sample_count)
     DDS_InstanceHandle_t instance_handle = DDS_HANDLE_NIL;
     const char *type_name = NULL;
     int count = 0;  
-    DDS_Duration_t send_period = {4,0};
+    DDS_Duration_t send_period = {0,100000000};
 
     /* To customize participant QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
@@ -176,17 +176,18 @@ extern "C" int publisher_main(int domainId, int sample_count)
     */
 
     /* Main loop */
+    long int counter = 0;
     for (count=0; (sample_count == 0) || (count < sample_count); ++count) {
 
         printf("Writing Sensors, count %d\n", count);
 
         /* Modify the data to be sent here */
-
+        instance->value = counter;
         retcode = Sensors_writer->write(*instance, instance_handle);
         if (retcode != DDS_RETCODE_OK) {
             printf("write error %d\n", retcode);
         }
-
+        counter++;
         NDDSUtility::sleep(send_period);
     }
 

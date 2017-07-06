@@ -13,17 +13,25 @@ int main(int argc, char *argv[])
     Publisher pub1(participant, "Example Sensors1");
     Publisher pub2(participant, "Example Sensors2");
 
-    SensorsListener *reader1;
-    reader1 = new SensorsListener();
-    Subscriber sub1(participant, "Example Sensors3", reader1);
-
-    SensorsListener *reader2;
-    reader2 = new SensorsListener();
-    Subscriber sub2(participant, "Example Sensors4", reader2);
-
+    // SensorsListener *reader1;
+    // reader1 = new SensorsListener();
+    Subscriber sub1(participant, "Example Sensors");
+    // SensorsListener *reader2;
+    // reader2 = new SensorsListener();
+    // Subscriber sub2(participant, "Example Sensors4", reader2);
     static int counter = 0;
     while(1){
-        std::cout << "Sending.." << std::endl;
+        // int sub1_index = sub1.reader_listener->index;
+        // float sensor_val = sub1.reader_listener->data_seq[sub1_index].value;
+        // printf("Value: %f\n", sensor_val);
+
+        for (int i = 0; i < sub1.reader_listener->data_seq.length(); ++i) {
+            if (sub1.reader_listener->info_seq[i].valid_data) {
+                float sensor_val = sub1.reader_listener->data_seq[i].value;
+                printf("Value: %f\n", sensor_val);
+            }
+        }
+
         pub1.instance->value = 1;
         pub1.publish(); 
 

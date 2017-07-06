@@ -19,6 +19,7 @@ class Publisher
     public:
         Publisher(Boilerplate& participant_object, char const * user_topic );
         int init_publisher();
+        int kill();
         void publish();
         Sensors *instance;
 
@@ -66,11 +67,12 @@ class Subscriber
 {
     public:
         Subscriber(Boilerplate& participant_object, char const * user_topic);
-        int init_subscriber();
-        SensorsSeq data_seq;
-                SensorsListener *reader_listener;
 
-        int * x;
+        int init_subscriber();
+        int kill();
+
+        SensorsSeq data_seq;
+        SensorsListener *reader_listener;
 
     private:
         char const * user_topic_;

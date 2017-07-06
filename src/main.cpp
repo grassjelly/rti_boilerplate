@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
 #include "ndds/ndds_cpp.h"
 #include "Boilerplate.h"
 
@@ -13,17 +10,10 @@ int main(int argc, char *argv[])
     Publisher pub1(participant, "Example Sensors1");
     Publisher pub2(participant, "Example Sensors2");
 
-    // SensorsListener *reader1;
-    // reader1 = new SensorsListener();
     Subscriber sub1(participant, "Example Sensors");
-    // SensorsListener *reader2;
-    // reader2 = new SensorsListener();
-    // Subscriber sub2(participant, "Example Sensors4", reader2);
+    // Subscriber sub2(participant, "Example Sensors4");
     static int counter = 0;
-    while(1){
-        // int sub1_index = sub1.reader_listener->index;
-        // float sensor_val = sub1.reader_listener->data_seq[sub1_index].value;
-        // printf("Value: %f\n", sensor_val);
+    for(;;){
 
         for (int i = 0; i < sub1.reader_listener->data_seq.length(); ++i) {
             if (sub1.reader_listener->info_seq[i].valid_data) {
@@ -39,5 +29,9 @@ int main(int argc, char *argv[])
         pub2.publish(); 
         NDDSUtility::sleep(send_period);
     }
+
+    pub1.kill();
+    pub2.kill();
+    sub1.kill();
     return 0;
 }

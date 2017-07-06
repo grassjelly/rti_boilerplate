@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Boilerplate.h"
 #include "Sensors.h"
 #include "SensorsSupport.h"
@@ -134,7 +133,16 @@ void Publisher::publish(){
     }
 }
 
+int Publisher::kill()
+{
+    boiler_participant_.retcode_ = SensorsTypeSupport::delete_data(instance);
+    if (boiler_participant_.retcode_ != DDS_RETCODE_OK) {
+        printf("SensorsTypeSupport::delete_data error %d\n", boiler_participant_.retcode_);
+    }
 
+    /* Delete all entities */
+    return boiler_participant_.node_shutdown();
+}
 
 Subscriber::Subscriber(Boilerplate& participant_object, char const * user_topic) : boiler_participant_(participant_object)
 {
@@ -235,7 +243,12 @@ int Subscriber::init_subscriber()
         delete reader_listener;
         return -1;
     }
-
-
 }
 
+int Subscriber::kill()
+{
+    int status = boiler_participant_.node_shutdown();
+    delete reader_listener;
+
+    return status;
+}

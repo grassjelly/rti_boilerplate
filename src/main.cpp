@@ -7,10 +7,14 @@ int main(int argc, char *argv[])
 {
     DDS_Duration_t send_period = {1,0};
     Boilerplate participant(DOMAIN_ID);
-    Publisher pub1(participant, "Example Sensors1");
-    Publisher pub2(participant, "Example Sensors2");
 
     Subscriber sub1(participant, "Example Sensors");
+
+    Publisher pub1(participant, "Example Sensors1");
+    pub1.instance->id = "1";
+
+    Publisher pub2(participant, "Example Sensors2");
+    pub2.instance->id = "2";
     // Subscriber sub2(participant, "Example Sensors4");
     static int counter = 0;
     for(;;){
@@ -21,11 +25,10 @@ int main(int argc, char *argv[])
                 printf("Value: %f\n", sensor_val);
             }
         }
-
-        pub1.instance->value = 1;
+        pub1.instance->value = counter++;
         pub1.publish(); 
 
-        pub2.instance->value = 2;
+        pub2.instance->value = counter++;
         pub2.publish(); 
         NDDSUtility::sleep(send_period);
     }

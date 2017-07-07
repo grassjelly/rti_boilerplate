@@ -70,7 +70,6 @@ class Subscriber
 
         int init_subscriber();
         int kill();
-
         SensorsSeq data_seq;
         SensorsListener *reader_listener;
 

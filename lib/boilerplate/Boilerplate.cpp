@@ -24,15 +24,14 @@ int Boilerplate::node_shutdown()
             printf("delete_participant error %d\n", retcode_);
             status = -1;
         }
-        
     }
 
     return status;
 }
 
 int Boilerplate::init_domain_participant(int domainId){
-  DDSDomainParticipant *participant = NULL;
-  participant_ = participant;
+//   DDSDomainParticipant *participant = NULL;
+//   participant_ = participant;
 
   DDS_InstanceHandle_t instance_handle = DDS_HANDLE_NIL;
   DDS_Duration_t send_period = {4,0};
@@ -49,9 +48,15 @@ int Boilerplate::init_domain_participant(int domainId){
   }
 }
 
-Publisher::Publisher(Boilerplate& participant_object, char const * user_topic) : boiler_participant_(participant_object)
+DDSDomainParticipant * Boilerplate::get_participant_obj()
+{
+    return participant_;
+}
+
+Publisher::Publisher(Boilerplate& participant_object, char const * user_topic) : boiler_object_(participant_object)
 {
     user_topic_ = user_topic;
+    participant_ = boiler_object_.get_participant_obj();
     init_publisher();
 }
 
@@ -64,37 +69,37 @@ int Publisher::init_publisher()
     instance = NULL;
     instance_handle_ = DDS_HANDLE_NIL;
     const char *type_name = NULL;
-
+    
     /* To customize publisher QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
-    publisher = boiler_participant_.participant_->create_publisher(
+    publisher = participant_->create_publisher(
         DDS_PUBLISHER_QOS_DEFAULT, NULL /* listener */, DDS_STATUS_MASK_NONE);
     if (publisher == NULL) {
         printf("create_publisher error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
     
     /* Register type before creating topic */
     type_name = SensorsTypeSupport::get_type_name();
-    boiler_participant_.retcode_ = SensorsTypeSupport::register_type(
-        boiler_participant_.participant_, type_name);
-    if (boiler_participant_.retcode_ != DDS_RETCODE_OK) {
-        printf("register_type error %d\n", boiler_participant_.retcode_);
-        boiler_participant_.node_shutdown();
+    retcode_ = SensorsTypeSupport::register_type(
+        participant_, type_name);
+    if (retcode_ != DDS_RETCODE_OK) {
+        printf("register_type error %d\n", retcode_);
+        boiler_object_.node_shutdown();
         return -1;
     }
 
 /* To customize topic QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
-    topic = boiler_participant_.participant_->create_topic(
+    topic = participant_->create_topic(
         user_topic_,
         type_name, DDS_TOPIC_QOS_DEFAULT, NULL /* listener */,
         DDS_STATUS_MASK_NONE);    // y.publish();
 
     if (topic == NULL) {
         printf("create_topic error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
     
@@ -105,14 +110,14 @@ int Publisher::init_publisher()
         DDS_STATUS_MASK_NONE);
     if (writer == NULL) {
         printf("create_datawriter error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
 
     Sensors_writer_ = SensorsDataWriter::narrow(writer);
     if (Sensors_writer_ == NULL) {
         printf("DataWriter narrow error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
 
@@ -120,33 +125,34 @@ int Publisher::init_publisher()
     instance = SensorsTypeSupport::create_data();
     if (instance == NULL) {
         printf("SensorsTypeSupport::create_data error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
 }
 
 void Publisher::publish(){
-    boiler_participant_.retcode_ = Sensors_writer_->write(*instance, instance_handle_);
+    retcode_ = Sensors_writer_->write(*instance, instance_handle_);
 
-    if (boiler_participant_.retcode_ != DDS_RETCODE_OK) {
-        printf("write error %d\n", boiler_participant_.retcode_);
+    if (retcode_ != DDS_RETCODE_OK) {
+        printf("write error %d\n", retcode_);
     }
 }
 
 int Publisher::kill()
 {
-    boiler_participant_.retcode_ = SensorsTypeSupport::delete_data(instance);
-    if (boiler_participant_.retcode_ != DDS_RETCODE_OK) {
-        printf("SensorsTypeSupport::delete_data error %d\n", boiler_participant_.retcode_);
+    retcode_ = SensorsTypeSupport::delete_data(instance);
+    if (retcode_ != DDS_RETCODE_OK) {
+        printf("SensorsTypeSupport::delete_data error %d\n", retcode_);
     }
 
     /* Delete all entities */
-    return boiler_participant_.node_shutdown();
+    return boiler_object_.node_shutdown();
 }
 
-Subscriber::Subscriber(Boilerplate& participant_object, char const * user_topic) : boiler_participant_(participant_object)
+Subscriber::Subscriber(Boilerplate& participant_object, char const * user_topic) : boiler_object_(participant_object)
 {
     user_topic_ = user_topic;
+    participant_ = boiler_object_.get_participant_obj();
     init_subscriber();
 }
 
@@ -200,55 +206,65 @@ int Subscriber::init_subscriber()
 
     /* To customize publisher QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
-    subscriber = boiler_participant_.participant_->create_subscriber(
+    subscriber = participant_->create_subscriber(
         DDS_SUBSCRIBER_QOS_DEFAULT, NULL /* listener */, DDS_STATUS_MASK_NONE);
     if (subscriber == NULL) {
         printf("create_subscriber error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
     
     /* Register type before creating topic */
     type_name = SensorsTypeSupport::get_type_name();
-    boiler_participant_.retcode_ = SensorsTypeSupport::register_type(
-        boiler_participant_.participant_, type_name);
-    if (boiler_participant_.retcode_ != DDS_RETCODE_OK) {
-        printf("register_type error %d\n", boiler_participant_.retcode_);
-        boiler_participant_.node_shutdown();
+    retcode_ = SensorsTypeSupport::register_type(
+        participant_, type_name);
+    if (retcode_ != DDS_RETCODE_OK) {
+        printf("register_type error %d\n", retcode_);
+        boiler_object_.node_shutdown();
         return -1;
     }
 
 /* To customize topic QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
-    topic = boiler_participant_.participant_->create_topic(
+    topic = participant_->create_topic(
         user_topic_,
         type_name, DDS_TOPIC_QOS_DEFAULT, NULL /* listener */,
         DDS_STATUS_MASK_NONE);    
     if (topic == NULL) {
         printf("create_topic error\n");
-        boiler_participant_.node_shutdown();
+        boiler_object_.node_shutdown();
         return -1;
     }
 
     /* Create a data reader listener */
-    reader_listener = new SensorsListener();
+    reader_listener_ = new SensorsListener();
         /* To customize data writer QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
     reader = subscriber->create_datareader(
-        topic, DDS_DATAREADER_QOS_DEFAULT, reader_listener /* listener */,
+        topic, DDS_DATAREADER_QOS_DEFAULT, reader_listener_ /* listener */,
         DDS_STATUS_MASK_ALL);
     if (reader == NULL) {
         printf("create_datareader error\n");
-        boiler_participant_.node_shutdown();
-        delete reader_listener;
+        boiler_object_.node_shutdown();
+        delete reader_listener_;
         return -1;
     }
 }
 
+SensorsSeq Subscriber::get_data_seq()
+{
+    return reader_listener_->data_seq;
+}
+
+DDS_SampleInfoSeq Subscriber::get_info_seq()
+{
+    return reader_listener_->info_seq;
+}
+
 int Subscriber::kill()
 {
-    int status = boiler_participant_.node_shutdown();
-    delete reader_listener;
+    int status = boiler_object_.node_shutdown();
+    delete reader_listener_;
 
     return status;
 }

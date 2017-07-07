@@ -87,5 +87,19 @@ target_link_libraries(main
   nddsc    
   nddscpp
   nddscore
-  ${CMAKE_DL_LIBS}  # ${CMAKE_DL_LIBS}
+  ${CMAKE_DL_LIBS} 
 )
+
+add_executable(twin
+  src/twin.cpp
+  ${BOILERPLATE_SOURCE}
+  ${SENSORS_SOURCE}
+)
+
+target_link_libraries(twin 
+  nddsc    
+  nddscpp
+  nddscore
+  ${CMAKE_DL_LIBS}  
+)
+

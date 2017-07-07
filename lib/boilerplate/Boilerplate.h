@@ -8,25 +8,33 @@ class Boilerplate
 {
     public:
         Boilerplate(int domainId);
+        int node_shutdown();
+        DDSDomainParticipant * get_participant_obj();
+        DDS_ReturnCode_t get_retcode();
+        
+        int x();
+
+    private:
         int init_domain_participant(int domainId);
         DDSDomainParticipant *participant_;
         DDS_ReturnCode_t retcode_;
-        int node_shutdown();           
 };
 
 class Publisher
 {
     public:
         Publisher(Boilerplate& participant_object, char const * user_topic );
-        int init_publisher();
-        int kill();
-        void publish();
         Sensors *instance;
+        int init_publisher();
+        void publish();
+        int kill();
 
     private:
         char const * user_topic_;
-        Boilerplate& boiler_participant_;
+        Boilerplate& boiler_object_;
+        DDSDomainParticipant *participant_;
         SensorsDataWriter * Sensors_writer_;
+        DDS_ReturnCode_t retcode_;
         DDS_InstanceHandle_t instance_handle_ ;
 };
 
@@ -59,6 +67,7 @@ class SensorsListener : public DDSDataReaderListener
             const DDS_SubscriptionMatchedStatus& /*status*/) {}
 
         virtual void on_data_available(DDSDataReader* reader);
+
         SensorsSeq data_seq;
         DDS_SampleInfoSeq info_seq;
 };
@@ -67,16 +76,17 @@ class Subscriber
 {
     public:
         Subscriber(Boilerplate& participant_object, char const * user_topic);
-
         int init_subscriber();
         int kill();
-        SensorsSeq data_seq;
-        SensorsListener *reader_listener;
+        SensorsSeq get_data_seq();
+        DDS_SampleInfoSeq get_info_seq();
 
     private:
         char const * user_topic_;
-        Boilerplate& boiler_participant_;
-        SensorsSeq data_seq_;
+        Boilerplate& boiler_object_;
+        DDSDomainParticipant *participant_;
+        SensorsListener *reader_listener_;
+        DDS_ReturnCode_t retcode_;
 };
 
 #endif

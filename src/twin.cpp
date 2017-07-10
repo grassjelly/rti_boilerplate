@@ -6,8 +6,9 @@
 int main(int argc, char *argv[])
 {
     DDS_Duration_t send_period = {1,0};
-    Boilerplate participant(DOMAIN_ID);
-
+        
+    Boilerplate * participant;
+    participant = new Boilerplate(DOMAIN_ID);
 
     Publisher pub1(participant, "Example Sensors3");
     pub1.instance->id = "3";

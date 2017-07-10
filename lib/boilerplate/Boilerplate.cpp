@@ -53,10 +53,11 @@ DDSDomainParticipant * Boilerplate::get_participant_obj()
     return participant_;
 }
 
-Publisher::Publisher(Boilerplate& participant_object, char const * user_topic) : boiler_object_(participant_object)
+Publisher::Publisher(Boilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
-    participant_ = boiler_object_.get_participant_obj();
+    boiler_object_ = boiler_object;
+    participant_ = boiler_object_->get_participant_obj();
     init_publisher();
 }
 
@@ -76,7 +77,7 @@ int Publisher::init_publisher()
         DDS_PUBLISHER_QOS_DEFAULT, NULL /* listener */, DDS_STATUS_MASK_NONE);
     if (publisher == NULL) {
         printf("create_publisher error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
     
@@ -86,7 +87,7 @@ int Publisher::init_publisher()
         participant_, type_name);
     if (retcode_ != DDS_RETCODE_OK) {
         printf("register_type error %d\n", retcode_);
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
 
@@ -99,7 +100,7 @@ int Publisher::init_publisher()
 
     if (topic == NULL) {
         printf("create_topic error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
     
@@ -110,14 +111,14 @@ int Publisher::init_publisher()
         DDS_STATUS_MASK_NONE);
     if (writer == NULL) {
         printf("create_datawriter error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
 
     Sensors_writer_ = SensorsDataWriter::narrow(writer);
     if (Sensors_writer_ == NULL) {
         printf("DataWriter narrow error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
 
@@ -125,7 +126,7 @@ int Publisher::init_publisher()
     instance = SensorsTypeSupport::create_data();
     if (instance == NULL) {
         printf("SensorsTypeSupport::create_data error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
 }
@@ -146,13 +147,14 @@ int Publisher::kill()
     }
 
     /* Delete all entities */
-    return boiler_object_.node_shutdown();
+    return boiler_object_->node_shutdown();
 }
 
-Subscriber::Subscriber(Boilerplate& participant_object, char const * user_topic) : boiler_object_(participant_object)
+Subscriber::Subscriber(Boilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
-    participant_ = boiler_object_.get_participant_obj();
+    boiler_object_ = boiler_object;
+    participant_ = boiler_object_->get_participant_obj();
     init_subscriber();
 }
 
@@ -210,7 +212,7 @@ int Subscriber::init_subscriber()
         DDS_SUBSCRIBER_QOS_DEFAULT, NULL /* listener */, DDS_STATUS_MASK_NONE);
     if (subscriber == NULL) {
         printf("create_subscriber error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
     
@@ -220,7 +222,7 @@ int Subscriber::init_subscriber()
         participant_, type_name);
     if (retcode_ != DDS_RETCODE_OK) {
         printf("register_type error %d\n", retcode_);
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
 
@@ -232,7 +234,7 @@ int Subscriber::init_subscriber()
         DDS_STATUS_MASK_NONE);    
     if (topic == NULL) {
         printf("create_topic error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         return -1;
     }
 
@@ -245,7 +247,7 @@ int Subscriber::init_subscriber()
         DDS_STATUS_MASK_ALL);
     if (reader == NULL) {
         printf("create_datareader error\n");
-        boiler_object_.node_shutdown();
+        boiler_object_->node_shutdown();
         delete reader_listener_;
         return -1;
     }
@@ -263,7 +265,7 @@ DDS_SampleInfoSeq Subscriber::get_info_seq()
 
 int Subscriber::kill()
 {
-    int status = boiler_object_.node_shutdown();
+    int status = boiler_object_->node_shutdown();
     delete reader_listener_;
 
     return status;

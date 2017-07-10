@@ -3,12 +3,12 @@
 #include "SensorsSupport.h"
 #include "ndds/ndds_cpp.h"
 
-Boilerplate::Boilerplate(int domainId)
+DDSBoilerplate::DDSBoilerplate(int domainId)
 {
   init_domain_participant(domainId);
 }
 
-int Boilerplate::node_shutdown()
+int DDSBoilerplate::node_shutdown()
 {
     int status = 0;
 
@@ -29,7 +29,7 @@ int Boilerplate::node_shutdown()
     return status;
 }
 
-int Boilerplate::init_domain_participant(int domainId){
+int DDSBoilerplate::init_domain_participant(int domainId){
 //   DDSDomainParticipant *participant = NULL;
 //   participant_ = participant;
 
@@ -48,12 +48,12 @@ int Boilerplate::init_domain_participant(int domainId){
   }
 }
 
-DDSDomainParticipant * Boilerplate::get_participant_obj()
+DDSDomainParticipant * DDSBoilerplate::get_participant_obj()
 {
     return participant_;
 }
 
-Publisher::Publisher(Boilerplate * boiler_object, char const * user_topic)
+Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
     boiler_object_ = boiler_object;
@@ -150,7 +150,7 @@ int Publisher::kill()
     return boiler_object_->node_shutdown();
 }
 
-Subscriber::Subscriber(Boilerplate * boiler_object, char const * user_topic)
+Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
     boiler_object_ = boiler_object;

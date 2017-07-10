@@ -1,13 +1,13 @@
-#ifndef BOILERPLATE_H
-#define BOILERPLATE_H
+#ifndef DDSBoilerplate_H
+#define DDSBoilerplate_H
 #include "Sensors.h"
 #include "SensorsSupport.h"
 #include "ndds/ndds_cpp.h"
 
-class Boilerplate
+class DDSBoilerplate
 {
     public:
-        Boilerplate(int domainId);
+        DDSBoilerplate(int domainId);
         int node_shutdown();
         DDSDomainParticipant * get_participant_obj();
         DDS_ReturnCode_t get_retcode();
@@ -23,7 +23,7 @@ class Boilerplate
 class Publisher
 {
     public:
-        Publisher(Boilerplate * boiler_object, char const * user_topic);
+        Publisher(DDSBoilerplate * boiler_object, char const * user_topic);
         Sensors *instance;
         int init_publisher();
         void publish();
@@ -31,7 +31,7 @@ class Publisher
 
     private:
         char const * user_topic_;
-        Boilerplate * boiler_object_;
+        DDSBoilerplate * boiler_object_;
         DDSDomainParticipant *participant_;
         SensorsDataWriter * Sensors_writer_;
         DDS_ReturnCode_t retcode_;
@@ -75,7 +75,7 @@ class SensorsListener : public DDSDataReaderListener
 class Subscriber
 {
     public:
-        Subscriber(Boilerplate * boiler_object, char const * user_topic);
+        Subscriber(DDSBoilerplate * boiler_object, char const * user_topic);
         int init_subscriber();
         int kill();
         SensorsSeq get_data_seq();
@@ -83,7 +83,7 @@ class Subscriber
 
     private:
         char const * user_topic_;
-        Boilerplate * boiler_object_;
+        DDSBoilerplate * boiler_object_;
         DDSDomainParticipant *participant_;
         SensorsListener *reader_listener_;
         DDS_ReturnCode_t retcode_;

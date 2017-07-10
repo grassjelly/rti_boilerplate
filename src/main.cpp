@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
         pub3.publish(); 
         NDDSUtility::sleep(send_period);
     }
-
+    delete participant;
     pub1.kill();
     pub2.kill();
     pub3.kill();

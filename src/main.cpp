@@ -3,21 +3,20 @@
 #include "TemplateBoilerplate.h"
 #include "SensorsBoilerplate.h"
 
-
 #define DOMAIN_ID 0
 
 int main(int argc, char *argv[])
 {
-    DDS_Duration_t send_period = {0,100000000};
-        
+    DDS_Duration_t send_period = DDS_Duration_t::from_millis(1000);
+
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);
 
     TemplateMsg::Publisher pub1(participant, "Example Template1");
-    pub1.instance->id = "1";
+    pub1.instance->id = (char*)"1";
 
     TemplateMsg::Publisher pub2(participant, "Example Template2");
-    pub2.instance->id = "2";
+    pub2.instance->id = (char*)"2";
 
     TemplateMsg::Subscriber sub1(participant, "Example Template3");
 

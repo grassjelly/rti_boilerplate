@@ -27,7 +27,8 @@ int DDSBoilerplate::node_shutdown()
     return status;
 }
 
-int DDSBoilerplate::init_domain_participant(int domainId){
+int DDSBoilerplate::init_domain_participant(int domainId)
+{
     participant_ = NULL;
 
     DDS_InstanceHandle_t instance_handle = DDS_HANDLE_NIL;

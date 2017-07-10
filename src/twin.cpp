@@ -10,15 +10,15 @@ int main(int argc, char *argv[])
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);
 
-    Publisher pub1(participant, "Example Sensors3");
+    SensorsMsg::Publisher pub1(participant, "Example Sensors3");
     pub1.instance->id = "3";
 
-    Publisher pub2(participant, "Example Sensors4");
+    SensorsMsg::Publisher pub2(participant, "Example Sensors4");
     pub2.instance->id = "4";
 
-    Subscriber sub1(participant, "Example Sensors1");
+    SensorsMsg::Subscriber sub1(participant, "Example Sensors1");
 
-    Subscriber sub2(participant, "Example Sensors2");
+    SensorsMsg::Subscriber sub2(participant, "Example Sensors2");
 
     static int counter = 0;
     for(;;){

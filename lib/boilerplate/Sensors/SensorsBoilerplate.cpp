@@ -2,7 +2,7 @@
 #include "SensorsBoilerplate.h"
 #include "SensorsSupport.h"
 
-Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
+SensorsMsg::Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
     boiler_object_ = boiler_object;
@@ -10,7 +10,7 @@ Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
     init_publisher();
 }
 
-int Publisher::init_publisher()
+int SensorsMsg::Publisher::init_publisher()
 {
     DDSPublisher *publisher;
     DDSTopic *topic = NULL;
@@ -80,7 +80,7 @@ int Publisher::init_publisher()
     }
 }
 
-void Publisher::publish(){
+void SensorsMsg::Publisher::publish(){
     retcode_ = Sensors_writer_->write(*instance, instance_handle_);
 
     if (retcode_ != DDS_RETCODE_OK) {
@@ -88,7 +88,7 @@ void Publisher::publish(){
     }
 }
 
-int Publisher::kill()
+int SensorsMsg::Publisher::kill()
 {
     retcode_ = SensorsTypeSupport::delete_data(instance);
     if (retcode_ != DDS_RETCODE_OK) {
@@ -99,7 +99,7 @@ int Publisher::kill()
     return boiler_object_->node_shutdown();
 }
 
-Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic)
+SensorsMsg::Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
     boiler_object_ = boiler_object;
@@ -107,7 +107,7 @@ Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic)
     init_subscriber();
 }
 
-void SensorsListener::on_data_available(DDSDataReader* reader) 
+void SensorsMsg::SensorsListener::on_data_available(DDSDataReader* reader) 
 {
     SensorsDataReader *Sensors_reader = NULL;
     SensorsSeq data_seq_;
@@ -149,7 +149,7 @@ void SensorsListener::on_data_available(DDSDataReader* reader)
     }
 }
 
-int Subscriber::init_subscriber()
+int SensorsMsg::Subscriber::init_subscriber()
 {
     DDSSubscriber *subscriber;
     DDSTopic *topic = NULL;
@@ -203,17 +203,17 @@ int Subscriber::init_subscriber()
     }
 }
 
-SensorsSeq Subscriber::get_data_seq()
+SensorsSeq SensorsMsg::Subscriber::get_data_seq()
 {
     return reader_listener_->data_seq;
 }
 
-DDS_SampleInfoSeq Subscriber::get_info_seq()
+DDS_SampleInfoSeq SensorsMsg::Subscriber::get_info_seq()
 {
     return reader_listener_->info_seq;
 }
 
-int Subscriber::kill()
+int SensorsMsg::Subscriber::kill()
 {
     int status = boiler_object_->node_shutdown();
     delete reader_listener_;

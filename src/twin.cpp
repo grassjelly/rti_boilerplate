@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    DDS_Duration_t send_period = DDS_Duration_t::from_millis(1000);
+    DDS_Duration_t send_period = DDS_Duration_t::from_millis(100);
         
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);

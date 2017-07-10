@@ -70,3 +70,34 @@ target_link_libraries(twin
   nddscore
   ${CMAKE_DL_LIBS}  
 )
+
+
+add_executable(minimal_publisher
+  src/minimal_publisher.cpp
+  ${BOILERPLATE_SOURCE}
+   ${SOURCE_Template}
+  ${SOURCE_Sensors}
+)
+
+target_link_libraries(minimal_publisher 
+  nddsc    
+  nddscpp
+  nddscore
+  ${CMAKE_DL_LIBS}  
+)
+
+
+add_executable(minimal_subscriber
+  src/minimal_subscriber.cpp
+  ${BOILERPLATE_SOURCE}
+   ${SOURCE_Template}
+  ${SOURCE_Sensors}
+)
+
+target_link_libraries(minimal_subscriber 
+  nddsc    
+  nddscpp
+  nddscore
+  ${CMAKE_DL_LIBS}  
+)
+

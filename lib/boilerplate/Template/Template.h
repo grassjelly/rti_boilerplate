@@ -3,14 +3,14 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from Sensors.idl using "rtiddsgen".
+This file was generated from Template.idl using "rtiddsgen".
 The rtiddsgen tool is part of the RTI Connext distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-#ifndef Sensors_1082808640_h
-#define Sensors_1082808640_h
+#ifndef Template_812788977_h
+#define Template_812788977_h
 
 #ifndef NDDS_STANDALONE_TYPE
 #ifndef ndds_cpp_h
@@ -22,25 +22,25 @@ or consult the RTI Connext manual.
 
 extern "C" {
 
-    extern const char *TestTYPENAME;
+    extern const char *TemplateTYPENAME;
 
 }
 
-struct TestSeq;
+struct TemplateSeq;
 #ifndef NDDS_STANDALONE_TYPE
-class TestTypeSupport;
-class TestDataWriter;
-class TestDataReader;
+class TemplateTypeSupport;
+class TemplateDataWriter;
+class TemplateDataReader;
 #endif
 
-class Test 
+class Template 
 {
   public:
-    typedef struct TestSeq Seq;
+    typedef struct TemplateSeq Seq;
     #ifndef NDDS_STANDALONE_TYPE
-    typedef TestTypeSupport TypeSupport;
-    typedef TestDataWriter DataWriter;
-    typedef TestDataReader DataReader;
+    typedef TemplateTypeSupport TypeSupport;
+    typedef TemplateDataWriter DataWriter;
+    typedef TemplateDataReader DataReader;
     #endif
 
     DDS_Char *   id ;
@@ -55,44 +55,44 @@ class Test
 #define NDDSUSERDllExport __declspec(dllexport)
 #endif
 
-NDDSUSERDllExport DDS_TypeCode* Test_get_typecode(void); /* Type code */
+NDDSUSERDllExport DDS_TypeCode* Template_get_typecode(void); /* Type code */
 
-DDS_SEQUENCE(TestSeq, Test);                                        
-
-NDDSUSERDllExport
-RTIBool Test_initialize(
-    Test* self);
+DDS_SEQUENCE(TemplateSeq, Template);                                        
 
 NDDSUSERDllExport
-RTIBool Test_initialize_ex(
-    Test* self,RTIBool allocatePointers,RTIBool allocateMemory);
+RTIBool Template_initialize(
+    Template* self);
 
 NDDSUSERDllExport
-RTIBool Test_initialize_w_params(
-    Test* self,
+RTIBool Template_initialize_ex(
+    Template* self,RTIBool allocatePointers,RTIBool allocateMemory);
+
+NDDSUSERDllExport
+RTIBool Template_initialize_w_params(
+    Template* self,
     const struct DDS_TypeAllocationParams_t * allocParams);        
 
 NDDSUSERDllExport
-void Test_finalize(
-    Test* self);
+void Template_finalize(
+    Template* self);
 
 NDDSUSERDllExport
-void Test_finalize_ex(
-    Test* self,RTIBool deletePointers);
+void Template_finalize_ex(
+    Template* self,RTIBool deletePointers);
 
 NDDSUSERDllExport
-void Test_finalize_w_params(
-    Test* self,
+void Template_finalize_w_params(
+    Template* self,
     const struct DDS_TypeDeallocationParams_t * deallocParams);
 
 NDDSUSERDllExport
-void Test_finalize_optional_members(
-    Test* self, RTIBool deletePointers);  
+void Template_finalize_optional_members(
+    Template* self, RTIBool deletePointers);  
 
 NDDSUSERDllExport
-RTIBool Test_copy(
-    Test* dst,
-    const Test* src);
+RTIBool Template_copy(
+    Template* dst,
+    const Template* src);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -101,5 +101,5 @@ RTIBool Test_copy(
 #define NDDSUSERDllExport
 #endif
 
-#endif /* Sensors */
+#endif /* Template */
 

@@ -3,16 +3,16 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from Sensors.idl using "rtiddsgen".
+This file was generated from Template.idl using "rtiddsgen".
 The rtiddsgen tool is part of the RTI Connext distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-#ifndef SensorsPlugin_1082808640_h
-#define SensorsPlugin_1082808640_h
+#ifndef TemplatePlugin_812788977_h
+#define TemplatePlugin_812788977_h
 
-#include "Sensors.h"
+#include "Template.h"
 
 struct RTICdrStream;
 
@@ -29,48 +29,48 @@ struct RTICdrStream;
 
 extern "C" {
 
-    #define TestPlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
-    #define TestPlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
-    #define TestPlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
+    #define TemplatePlugin_get_sample PRESTypePluginDefaultEndpointData_getSample 
+    #define TemplatePlugin_get_buffer PRESTypePluginDefaultEndpointData_getBuffer 
+    #define TemplatePlugin_return_buffer PRESTypePluginDefaultEndpointData_returnBuffer 
 
-    #define TestPlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
-    #define TestPlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
+    #define TemplatePlugin_create_sample PRESTypePluginDefaultEndpointData_createSample 
+    #define TemplatePlugin_destroy_sample PRESTypePluginDefaultEndpointData_deleteSample 
 
     /* --------------------------------------------------------------------------------------
     Support functions:
     * -------------------------------------------------------------------------------------- */
 
-    NDDSUSERDllExport extern Test*
-    TestPluginSupport_create_data_w_params(
+    NDDSUSERDllExport extern Template*
+    TemplatePluginSupport_create_data_w_params(
         const struct DDS_TypeAllocationParams_t * alloc_params);
 
-    NDDSUSERDllExport extern Test*
-    TestPluginSupport_create_data_ex(RTIBool allocate_pointers);
+    NDDSUSERDllExport extern Template*
+    TemplatePluginSupport_create_data_ex(RTIBool allocate_pointers);
 
-    NDDSUSERDllExport extern Test*
-    TestPluginSupport_create_data(void);
+    NDDSUSERDllExport extern Template*
+    TemplatePluginSupport_create_data(void);
 
     NDDSUSERDllExport extern RTIBool 
-    TestPluginSupport_copy_data(
-        Test *out,
-        const Test *in);
+    TemplatePluginSupport_copy_data(
+        Template *out,
+        const Template *in);
 
     NDDSUSERDllExport extern void 
-    TestPluginSupport_destroy_data_w_params(
-        Test *sample,
+    TemplatePluginSupport_destroy_data_w_params(
+        Template *sample,
         const struct DDS_TypeDeallocationParams_t * dealloc_params);
 
     NDDSUSERDllExport extern void 
-    TestPluginSupport_destroy_data_ex(
-        Test *sample,RTIBool deallocate_pointers);
+    TemplatePluginSupport_destroy_data_ex(
+        Template *sample,RTIBool deallocate_pointers);
 
     NDDSUSERDllExport extern void 
-    TestPluginSupport_destroy_data(
-        Test *sample);
+    TemplatePluginSupport_destroy_data(
+        Template *sample);
 
     NDDSUSERDllExport extern void 
-    TestPluginSupport_print_data(
-        const Test *sample,
+    TemplatePluginSupport_print_data(
+        const Template *sample,
         const char *desc,
         unsigned int indent);
 
@@ -79,7 +79,7 @@ extern "C" {
     * ---------------------------------------------------------------------------- */
 
     NDDSUSERDllExport extern PRESTypePluginParticipantData 
-    TestPlugin_on_participant_attached(
+    TemplatePlugin_on_participant_attached(
         void *registration_data, 
         const struct PRESTypePluginParticipantInfo *participant_info,
         RTIBool top_level_registration, 
@@ -87,40 +87,40 @@ extern "C" {
         RTICdrTypeCode *typeCode);
 
     NDDSUSERDllExport extern void 
-    TestPlugin_on_participant_detached(
+    TemplatePlugin_on_participant_detached(
         PRESTypePluginParticipantData participant_data);
 
     NDDSUSERDllExport extern PRESTypePluginEndpointData 
-    TestPlugin_on_endpoint_attached(
+    TemplatePlugin_on_endpoint_attached(
         PRESTypePluginParticipantData participant_data,
         const struct PRESTypePluginEndpointInfo *endpoint_info,
         RTIBool top_level_registration, 
         void *container_plugin_context);
 
     NDDSUSERDllExport extern void 
-    TestPlugin_on_endpoint_detached(
+    TemplatePlugin_on_endpoint_detached(
         PRESTypePluginEndpointData endpoint_data);
 
     NDDSUSERDllExport extern void    
-    TestPlugin_return_sample(
+    TemplatePlugin_return_sample(
         PRESTypePluginEndpointData endpoint_data,
-        Test *sample,
+        Template *sample,
         void *handle);    
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_copy_sample(
+    TemplatePlugin_copy_sample(
         PRESTypePluginEndpointData endpoint_data,
-        Test *out,
-        const Test *in);
+        Template *out,
+        const Template *in);
 
     /* ----------------------------------------------------------------------------
     (De)Serialize functions:
     * ------------------------------------------------------------------------- */
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_serialize(
+    TemplatePlugin_serialize(
         PRESTypePluginEndpointData endpoint_data,
-        const Test *sample,
+        const Template *sample,
         struct RTICdrStream *stream, 
         RTIBool serialize_encapsulation,
         RTIEncapsulationId encapsulation_id,
@@ -128,24 +128,24 @@ extern "C" {
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_deserialize_sample(
+    TemplatePlugin_deserialize_sample(
         PRESTypePluginEndpointData endpoint_data,
-        Test *sample, 
+        Template *sample, 
         struct RTICdrStream *stream,
         RTIBool deserialize_encapsulation,
         RTIBool deserialize_sample, 
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern RTIBool
-    TestPlugin_serialize_to_cdr_buffer(
+    TemplatePlugin_serialize_to_cdr_buffer(
         char * buffer,
         unsigned int * length,
-        const Test *sample); 
+        const Template *sample); 
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_deserialize(
+    TemplatePlugin_deserialize(
         PRESTypePluginEndpointData endpoint_data,
-        Test **sample, 
+        Template **sample, 
         RTIBool * drop_sample,
         struct RTICdrStream *stream,
         RTIBool deserialize_encapsulation,
@@ -153,13 +153,13 @@ extern "C" {
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern RTIBool
-    TestPlugin_deserialize_from_cdr_buffer(
-        Test *sample,
+    TemplatePlugin_deserialize_from_cdr_buffer(
+        Template *sample,
         const char * buffer,
         unsigned int length);    
 
     NDDSUSERDllExport extern RTIBool
-    TestPlugin_skip(
+    TemplatePlugin_skip(
         PRESTypePluginEndpointData endpoint_data,
         struct RTICdrStream *stream, 
         RTIBool skip_encapsulation,  
@@ -167,7 +167,7 @@ extern "C" {
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern unsigned int 
-    TestPlugin_get_serialized_sample_max_size_ex(
+    TemplatePlugin_get_serialized_sample_max_size_ex(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool * overflow,
         RTIBool include_encapsulation,
@@ -175,35 +175,35 @@ extern "C" {
         unsigned int current_alignment);    
 
     NDDSUSERDllExport extern unsigned int 
-    TestPlugin_get_serialized_sample_max_size(
+    TemplatePlugin_get_serialized_sample_max_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
         unsigned int current_alignment);
 
     NDDSUSERDllExport extern unsigned int 
-    TestPlugin_get_serialized_sample_min_size(
+    TemplatePlugin_get_serialized_sample_min_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
         unsigned int current_alignment);
 
     NDDSUSERDllExport extern unsigned int
-    TestPlugin_get_serialized_sample_size(
+    TemplatePlugin_get_serialized_sample_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
         unsigned int current_alignment,
-        const Test * sample);
+        const Template * sample);
 
     /* --------------------------------------------------------------------------------------
     Key Management functions:
     * -------------------------------------------------------------------------------------- */
     NDDSUSERDllExport extern PRESTypePluginKeyKind 
-    TestPlugin_get_key_kind(void);
+    TemplatePlugin_get_key_kind(void);
 
     NDDSUSERDllExport extern unsigned int 
-    TestPlugin_get_serialized_key_max_size_ex(
+    TemplatePlugin_get_serialized_key_max_size_ex(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool * overflow,
         RTIBool include_encapsulation,
@@ -211,16 +211,16 @@ extern "C" {
         unsigned int current_alignment);
 
     NDDSUSERDllExport extern unsigned int 
-    TestPlugin_get_serialized_key_max_size(
+    TemplatePlugin_get_serialized_key_max_size(
         PRESTypePluginEndpointData endpoint_data,
         RTIBool include_encapsulation,
         RTIEncapsulationId encapsulation_id,
         unsigned int current_alignment);
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_serialize_key(
+    TemplatePlugin_serialize_key(
         PRESTypePluginEndpointData endpoint_data,
-        const Test *sample,
+        const Template *sample,
         struct RTICdrStream *stream,
         RTIBool serialize_encapsulation,
         RTIEncapsulationId encapsulation_id,
@@ -228,18 +228,18 @@ extern "C" {
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_deserialize_key_sample(
+    TemplatePlugin_deserialize_key_sample(
         PRESTypePluginEndpointData endpoint_data,
-        Test * sample,
+        Template * sample,
         struct RTICdrStream *stream,
         RTIBool deserialize_encapsulation,
         RTIBool deserialize_key,
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern RTIBool 
-    TestPlugin_deserialize_key(
+    TemplatePlugin_deserialize_key(
         PRESTypePluginEndpointData endpoint_data,
-        Test ** sample,
+        Template ** sample,
         RTIBool * drop_sample,
         struct RTICdrStream *stream,
         RTIBool deserialize_encapsulation,
@@ -247,9 +247,9 @@ extern "C" {
         void *endpoint_plugin_qos);
 
     NDDSUSERDllExport extern RTIBool
-    TestPlugin_serialized_sample_to_key(
+    TemplatePlugin_serialized_sample_to_key(
         PRESTypePluginEndpointData endpoint_data,
-        Test *sample,
+        Template *sample,
         struct RTICdrStream *stream, 
         RTIBool deserialize_encapsulation,  
         RTIBool deserialize_key, 
@@ -257,10 +257,10 @@ extern "C" {
 
     /* Plugin Functions */
     NDDSUSERDllExport extern struct PRESTypePlugin*
-    TestPlugin_new(void);
+    TemplatePlugin_new(void);
 
     NDDSUSERDllExport extern void
-    TestPlugin_delete(struct PRESTypePlugin *);
+    TemplatePlugin_delete(struct PRESTypePlugin *);
 
 }
 
@@ -271,5 +271,5 @@ extern "C" {
 #define NDDSUSERDllExport
 #endif
 
-#endif /* SensorsPlugin_1082808640_h */
+#endif /* TemplatePlugin_812788977_h */
 

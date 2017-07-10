@@ -3,7 +3,7 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from Sensors.idl using "rtiddsgen".
+This file was generated from Template.idl using "rtiddsgen".
 The rtiddsgen tool is part of the RTI Connext distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
@@ -46,26 +46,26 @@ or consult the RTI Connext manual.
 #include "pres/pres_typePlugin.h"
 #endif
 
-#include "SensorsPlugin.h"
+#include "TemplatePlugin.h"
 
 /* ----------------------------------------------------------------------------
-*  Type Test
+*  Type Template
 * -------------------------------------------------------------------------- */
 
 /* -----------------------------------------------------------------------------
 Support functions:
 * -------------------------------------------------------------------------- */
 
-Test*
-TestPluginSupport_create_data_w_params(
+Template*
+TemplatePluginSupport_create_data_w_params(
     const struct DDS_TypeAllocationParams_t * alloc_params){
-    Test *sample = NULL;
+    Template *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Test);
+        &sample, Template);
 
     if(sample != NULL) {
-        if (!Test_initialize_w_params(sample,alloc_params)) {
+        if (!Template_initialize_w_params(sample,alloc_params)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -73,15 +73,15 @@ TestPluginSupport_create_data_w_params(
     return sample; 
 } 
 
-Test *
-TestPluginSupport_create_data_ex(RTIBool allocate_pointers){
-    Test *sample = NULL;
+Template *
+TemplatePluginSupport_create_data_ex(RTIBool allocate_pointers){
+    Template *sample = NULL;
 
     RTIOsapiHeap_allocateStructure(
-        &sample, Test);
+        &sample, Template);
 
     if(sample != NULL) {
-        if (!Test_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
+        if (!Template_initialize_ex(sample,allocate_pointers, RTI_TRUE)) {
             RTIOsapiHeap_freeStructure(sample);
             return NULL;
         }
@@ -89,50 +89,50 @@ TestPluginSupport_create_data_ex(RTIBool allocate_pointers){
     return sample; 
 }
 
-Test *
-TestPluginSupport_create_data(void)
+Template *
+TemplatePluginSupport_create_data(void)
 {
-    return TestPluginSupport_create_data_ex(RTI_TRUE);
+    return TemplatePluginSupport_create_data_ex(RTI_TRUE);
 }
 
 void 
-TestPluginSupport_destroy_data_w_params(
-    Test *sample,
+TemplatePluginSupport_destroy_data_w_params(
+    Template *sample,
     const struct DDS_TypeDeallocationParams_t * dealloc_params) {
 
-    Test_finalize_w_params(sample,dealloc_params);
+    Template_finalize_w_params(sample,dealloc_params);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 void 
-TestPluginSupport_destroy_data_ex(
-    Test *sample,RTIBool deallocate_pointers) {
+TemplatePluginSupport_destroy_data_ex(
+    Template *sample,RTIBool deallocate_pointers) {
 
-    Test_finalize_ex(sample,deallocate_pointers);
+    Template_finalize_ex(sample,deallocate_pointers);
 
     RTIOsapiHeap_freeStructure(sample);
 }
 
 void 
-TestPluginSupport_destroy_data(
-    Test *sample) {
+TemplatePluginSupport_destroy_data(
+    Template *sample) {
 
-    TestPluginSupport_destroy_data_ex(sample,RTI_TRUE);
+    TemplatePluginSupport_destroy_data_ex(sample,RTI_TRUE);
 
 }
 
 RTIBool 
-TestPluginSupport_copy_data(
-    Test *dst,
-    const Test *src)
+TemplatePluginSupport_copy_data(
+    Template *dst,
+    const Template *src)
 {
-    return Test_copy(dst,src);
+    return Template_copy(dst,src);
 }
 
 void 
-TestPluginSupport_print_data(
-    const Test *sample,
+TemplatePluginSupport_print_data(
+    const Template *sample,
     const char *desc,
     unsigned int indent_level)
 {
@@ -176,7 +176,7 @@ Callback functions:
 * ---------------------------------------------------------------------------- */
 
 PRESTypePluginParticipantData 
-TestPlugin_on_participant_attached(
+TemplatePlugin_on_participant_attached(
     void *registration_data,
     const struct PRESTypePluginParticipantInfo *participant_info,
     RTIBool top_level_registration,
@@ -194,7 +194,7 @@ TestPlugin_on_participant_attached(
 }
 
 void 
-TestPlugin_on_participant_detached(
+TemplatePlugin_on_participant_detached(
     PRESTypePluginParticipantData participant_data)
 {
 
@@ -202,7 +202,7 @@ TestPlugin_on_participant_detached(
 }
 
 PRESTypePluginEndpointData
-TestPlugin_on_endpoint_attached(
+TemplatePlugin_on_endpoint_attached(
     PRESTypePluginParticipantData participant_data,
     const struct PRESTypePluginEndpointInfo *endpoint_info,
     RTIBool top_level_registration, 
@@ -219,9 +219,9 @@ TestPlugin_on_endpoint_attached(
         participant_data,
         endpoint_info,
         (PRESTypePluginDefaultEndpointDataCreateSampleFunction)
-        TestPluginSupport_create_data,
+        TemplatePluginSupport_create_data,
         (PRESTypePluginDefaultEndpointDataDestroySampleFunction)
-        TestPluginSupport_destroy_data,
+        TemplatePluginSupport_destroy_data,
         NULL , NULL );
 
     if (epd == NULL) {
@@ -229,7 +229,7 @@ TestPlugin_on_endpoint_attached(
     } 
 
     if (endpoint_info->endpointKind == PRES_TYPEPLUGIN_ENDPOINT_WRITER) {
-        serializedSampleMaxSize = TestPlugin_get_serialized_sample_max_size(
+        serializedSampleMaxSize = TemplatePlugin_get_serialized_sample_max_size(
             epd,RTI_FALSE,RTI_CDR_ENCAPSULATION_ID_CDR_BE,0);
 
         PRESTypePluginDefaultEndpointData_setMaxSizeSerializedSample(epd, serializedSampleMaxSize);
@@ -238,9 +238,9 @@ TestPlugin_on_endpoint_attached(
             epd,
             endpoint_info,
             (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-            TestPlugin_get_serialized_sample_max_size, epd,
+            TemplatePlugin_get_serialized_sample_max_size, epd,
             (PRESTypePluginGetSerializedSampleSizeFunction)
-            TestPlugin_get_serialized_sample_size,
+            TemplatePlugin_get_serialized_sample_size,
             epd) == RTI_FALSE) {
             PRESTypePluginDefaultEndpointData_delete(epd);
             return NULL;
@@ -251,7 +251,7 @@ TestPlugin_on_endpoint_attached(
 }
 
 void 
-TestPlugin_on_endpoint_detached(
+TemplatePlugin_on_endpoint_detached(
     PRESTypePluginEndpointData endpoint_data)
 {  
 
@@ -259,42 +259,42 @@ TestPlugin_on_endpoint_detached(
 }
 
 void    
-TestPlugin_return_sample(
+TemplatePlugin_return_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Test *sample,
+    Template *sample,
     void *handle)
 {
 
-    Test_finalize_optional_members(sample, RTI_TRUE);
+    Template_finalize_optional_members(sample, RTI_TRUE);
 
     PRESTypePluginDefaultEndpointData_returnSample(
         endpoint_data, sample, handle);
 }
 
 RTIBool 
-TestPlugin_copy_sample(
+TemplatePlugin_copy_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Test *dst,
-    const Test *src)
+    Template *dst,
+    const Template *src)
 {
     if (endpoint_data) {} /* To avoid warnings */
-    return TestPluginSupport_copy_data(dst,src);
+    return TemplatePluginSupport_copy_data(dst,src);
 }
 
 /* ----------------------------------------------------------------------------
 (De)Serialize functions:
 * ------------------------------------------------------------------------- */
 unsigned int 
-TestPlugin_get_serialized_sample_max_size(
+TemplatePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment);
 
 RTIBool 
-TestPlugin_serialize(
+TemplatePlugin_serialize(
     PRESTypePluginEndpointData endpoint_data,
-    const Test *sample, 
+    const Template *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -342,9 +342,9 @@ TestPlugin_serialize(
 }
 
 RTIBool 
-TestPlugin_deserialize_sample(
+TemplatePlugin_deserialize_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Test *sample,
+    Template *sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_sample, 
@@ -367,7 +367,7 @@ TestPlugin_deserialize_sample(
     }
     if(deserialize_sample) {
 
-        Test_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
+        Template_initialize_ex(sample, RTI_FALSE, RTI_FALSE);
 
         if (!RTICdrStream_deserializeStringEx(
             stream,&sample->id, (50) + 1, RTI_FALSE)) {
@@ -398,10 +398,10 @@ TestPlugin_deserialize_sample(
 }
 
 RTIBool
-TestPlugin_serialize_to_cdr_buffer(
+TemplatePlugin_serialize_to_cdr_buffer(
     char * buffer,
     unsigned int * length,
-    const Test *sample)
+    const Template *sample)
 {
     struct RTICdrStream stream;
     struct PRESTypePluginDefaultEndpointData epd;
@@ -412,12 +412,12 @@ TestPlugin_serialize_to_cdr_buffer(
     }
 
     epd._maxSizeSerializedSample =
-    TestPlugin_get_serialized_sample_max_size(
+    TemplatePlugin_get_serialized_sample_max_size(
         NULL, RTI_TRUE, RTI_CDR_ENCAPSULATION_ID_CDR_NATIVE, 0);
 
     if (buffer == NULL) {
         *length = 
-        TestPlugin_get_serialized_sample_size(
+        TemplatePlugin_get_serialized_sample_size(
             (PRESTypePluginEndpointData)&epd,
             RTI_TRUE,
             RTI_CDR_ENCAPSULATION_ID_CDR_NATIVE,
@@ -434,7 +434,7 @@ TestPlugin_serialize_to_cdr_buffer(
     RTICdrStream_init(&stream);
     RTICdrStream_set(&stream, (char *)buffer, *length);
 
-    result = TestPlugin_serialize(
+    result = TemplatePlugin_serialize(
         (PRESTypePluginEndpointData)&epd, sample, &stream, 
         RTI_TRUE, RTI_CDR_ENCAPSULATION_ID_CDR_NATIVE, 
         RTI_TRUE, NULL);  
@@ -444,8 +444,8 @@ TestPlugin_serialize_to_cdr_buffer(
 }
 
 RTIBool
-TestPlugin_deserialize_from_cdr_buffer(
-    Test *sample,
+TemplatePlugin_deserialize_from_cdr_buffer(
+    Template *sample,
     const char * buffer,
     unsigned int length)
 {
@@ -454,16 +454,16 @@ TestPlugin_deserialize_from_cdr_buffer(
     RTICdrStream_init(&stream);
     RTICdrStream_set(&stream, (char *)buffer, length);
 
-    return TestPlugin_deserialize_sample( 
+    return TemplatePlugin_deserialize_sample( 
         NULL, sample,
         &stream, RTI_TRUE, RTI_TRUE, 
         NULL);
 }
 
 RTIBool 
-TestPlugin_deserialize(
+TemplatePlugin_deserialize(
     PRESTypePluginEndpointData endpoint_data,
-    Test **sample,
+    Template **sample,
     RTIBool * drop_sample,
     struct RTICdrStream *stream,   
     RTIBool deserialize_encapsulation,
@@ -475,7 +475,7 @@ TestPlugin_deserialize(
     if (drop_sample) {} /* To avoid warnings */
 
     stream->_xTypesState.unassignable = RTI_FALSE;
-    result= TestPlugin_deserialize_sample( 
+    result= TemplatePlugin_deserialize_sample( 
         endpoint_data, (sample != NULL)?*sample:NULL,
         stream, deserialize_encapsulation, deserialize_sample, 
         endpoint_plugin_qos);
@@ -489,7 +489,7 @@ TestPlugin_deserialize(
 
 }
 
-RTIBool TestPlugin_skip(
+RTIBool TemplatePlugin_skip(
     PRESTypePluginEndpointData endpoint_data,
     struct RTICdrStream *stream,   
     RTIBool skip_encapsulation,
@@ -539,7 +539,7 @@ RTIBool TestPlugin_skip(
 }
 
 unsigned int 
-TestPlugin_get_serialized_sample_max_size_ex(
+TemplatePlugin_get_serialized_sample_max_size_ex(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool * overflow,
     RTIBool include_encapsulation,
@@ -581,7 +581,7 @@ TestPlugin_get_serialized_sample_max_size_ex(
 }
 
 unsigned int 
-TestPlugin_get_serialized_sample_max_size(
+TemplatePlugin_get_serialized_sample_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -590,7 +590,7 @@ TestPlugin_get_serialized_sample_max_size(
     unsigned int size;
     RTIBool overflow = RTI_FALSE;
 
-    size = TestPlugin_get_serialized_sample_max_size_ex(
+    size = TemplatePlugin_get_serialized_sample_max_size_ex(
         endpoint_data,&overflow,include_encapsulation,encapsulation_id,current_alignment);
 
     if (overflow) {
@@ -601,7 +601,7 @@ TestPlugin_get_serialized_sample_max_size(
 }
 
 unsigned int 
-TestPlugin_get_serialized_sample_min_size(
+TemplatePlugin_get_serialized_sample_min_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -645,12 +645,12 @@ TestPlugin_get_serialized_sample_min_size(
 * encapsulation flags.
 */
 unsigned int
-TestPlugin_get_serialized_sample_size(
+TemplatePlugin_get_serialized_sample_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
     unsigned int current_alignment,
-    const Test * sample) 
+    const Template * sample) 
 {
 
     unsigned int initial_alignment = current_alignment;
@@ -691,15 +691,15 @@ Key Management functions:
 * -------------------------------------------------------------------------------------- */
 
 PRESTypePluginKeyKind 
-TestPlugin_get_key_kind(void)
+TemplatePlugin_get_key_kind(void)
 {
     return PRES_TYPEPLUGIN_NO_KEY;
 }
 
 RTIBool 
-TestPlugin_serialize_key(
+TemplatePlugin_serialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    const Test *sample, 
+    const Template *sample, 
     struct RTICdrStream *stream,    
     RTIBool serialize_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -718,7 +718,7 @@ TestPlugin_serialize_key(
 
     if(serialize_key) {
 
-        if (!TestPlugin_serialize(
+        if (!TemplatePlugin_serialize(
             endpoint_data,
             sample,
             stream,
@@ -737,9 +737,9 @@ TestPlugin_serialize_key(
     return RTI_TRUE;
 }
 
-RTIBool TestPlugin_deserialize_key_sample(
+RTIBool TemplatePlugin_deserialize_key_sample(
     PRESTypePluginEndpointData endpoint_data,
-    Test *sample, 
+    Template *sample, 
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
     RTIBool deserialize_key,
@@ -760,7 +760,7 @@ RTIBool TestPlugin_deserialize_key_sample(
     }
     if (deserialize_key) {
 
-        if (!TestPlugin_deserialize_sample(
+        if (!TemplatePlugin_deserialize_sample(
             endpoint_data, sample, stream, 
             RTI_FALSE, RTI_TRUE, 
             endpoint_plugin_qos)) {
@@ -775,9 +775,9 @@ RTIBool TestPlugin_deserialize_key_sample(
     return RTI_TRUE;
 }
 
-RTIBool TestPlugin_deserialize_key(
+RTIBool TemplatePlugin_deserialize_key(
     PRESTypePluginEndpointData endpoint_data,
-    Test **sample, 
+    Template **sample, 
     RTIBool * drop_sample,
     struct RTICdrStream *stream,
     RTIBool deserialize_encapsulation,
@@ -787,7 +787,7 @@ RTIBool TestPlugin_deserialize_key(
     RTIBool result;
     if (drop_sample) {} /* To avoid warnings */
     stream->_xTypesState.unassignable = RTI_FALSE;
-    result= TestPlugin_deserialize_key_sample(
+    result= TemplatePlugin_deserialize_key_sample(
         endpoint_data, (sample != NULL)?*sample:NULL, stream,
         deserialize_encapsulation, deserialize_key, endpoint_plugin_qos);
     if (result) {
@@ -801,7 +801,7 @@ RTIBool TestPlugin_deserialize_key(
 }
 
 unsigned int
-TestPlugin_get_serialized_key_max_size_ex(
+TemplatePlugin_get_serialized_key_max_size_ex(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool * overflow,
     RTIBool include_encapsulation,
@@ -827,7 +827,7 @@ TestPlugin_get_serialized_key_max_size_ex(
         initial_alignment = 0;
     }
 
-    current_alignment += TestPlugin_get_serialized_sample_max_size_ex(
+    current_alignment += TemplatePlugin_get_serialized_sample_max_size_ex(
         endpoint_data, overflow,RTI_FALSE, encapsulation_id, current_alignment);
 
     if (include_encapsulation) {
@@ -837,7 +837,7 @@ TestPlugin_get_serialized_key_max_size_ex(
 }
 
 unsigned int
-TestPlugin_get_serialized_key_max_size(
+TemplatePlugin_get_serialized_key_max_size(
     PRESTypePluginEndpointData endpoint_data,
     RTIBool include_encapsulation,
     RTIEncapsulationId encapsulation_id,
@@ -846,7 +846,7 @@ TestPlugin_get_serialized_key_max_size(
     unsigned int size;
     RTIBool overflow = RTI_FALSE;
 
-    size = TestPlugin_get_serialized_key_max_size_ex(
+    size = TemplatePlugin_get_serialized_key_max_size_ex(
         endpoint_data,&overflow,include_encapsulation,encapsulation_id,current_alignment);
 
     if (overflow) {
@@ -857,9 +857,9 @@ TestPlugin_get_serialized_key_max_size(
 }
 
 RTIBool 
-TestPlugin_serialized_sample_to_key(
+TemplatePlugin_serialized_sample_to_key(
     PRESTypePluginEndpointData endpoint_data,
-    Test *sample,
+    Template *sample,
     struct RTICdrStream *stream, 
     RTIBool deserialize_encapsulation,  
     RTIBool deserialize_key, 
@@ -883,7 +883,7 @@ TestPlugin_serialized_sample_to_key(
 
     if (deserialize_key) {
 
-        if (!TestPlugin_deserialize_sample(
+        if (!TemplatePlugin_deserialize_sample(
             endpoint_data, sample, stream, RTI_FALSE, 
             RTI_TRUE, endpoint_plugin_qos)) {
             return RTI_FALSE;
@@ -913,7 +913,7 @@ TestPlugin_serialized_sample_to_key(
 /* ------------------------------------------------------------------------
 * Plug-in Installation Methods
 * ------------------------------------------------------------------------ */
-struct PRESTypePlugin *TestPlugin_new(void) 
+struct PRESTypePlugin *TemplatePlugin_new(void) 
 { 
     struct PRESTypePlugin *plugin = NULL;
     const struct PRESTypePluginVersion PLUGIN_VERSION = 
@@ -930,50 +930,50 @@ struct PRESTypePlugin *TestPlugin_new(void)
     /* set up parent's function pointers */
     plugin->onParticipantAttached =
     (PRESTypePluginOnParticipantAttachedCallback)
-    TestPlugin_on_participant_attached;
+    TemplatePlugin_on_participant_attached;
     plugin->onParticipantDetached =
     (PRESTypePluginOnParticipantDetachedCallback)
-    TestPlugin_on_participant_detached;
+    TemplatePlugin_on_participant_detached;
     plugin->onEndpointAttached =
     (PRESTypePluginOnEndpointAttachedCallback)
-    TestPlugin_on_endpoint_attached;
+    TemplatePlugin_on_endpoint_attached;
     plugin->onEndpointDetached =
     (PRESTypePluginOnEndpointDetachedCallback)
-    TestPlugin_on_endpoint_detached;
+    TemplatePlugin_on_endpoint_detached;
 
     plugin->copySampleFnc =
     (PRESTypePluginCopySampleFunction)
-    TestPlugin_copy_sample;
+    TemplatePlugin_copy_sample;
     plugin->createSampleFnc =
     (PRESTypePluginCreateSampleFunction)
-    TestPlugin_create_sample;
+    TemplatePlugin_create_sample;
     plugin->destroySampleFnc =
     (PRESTypePluginDestroySampleFunction)
-    TestPlugin_destroy_sample;
+    TemplatePlugin_destroy_sample;
 
     plugin->serializeFnc =
     (PRESTypePluginSerializeFunction)
-    TestPlugin_serialize;
+    TemplatePlugin_serialize;
     plugin->deserializeFnc =
     (PRESTypePluginDeserializeFunction)
-    TestPlugin_deserialize;
+    TemplatePlugin_deserialize;
     plugin->getSerializedSampleMaxSizeFnc =
     (PRESTypePluginGetSerializedSampleMaxSizeFunction)
-    TestPlugin_get_serialized_sample_max_size;
+    TemplatePlugin_get_serialized_sample_max_size;
     plugin->getSerializedSampleMinSizeFnc =
     (PRESTypePluginGetSerializedSampleMinSizeFunction)
-    TestPlugin_get_serialized_sample_min_size;
+    TemplatePlugin_get_serialized_sample_min_size;
 
     plugin->getSampleFnc =
     (PRESTypePluginGetSampleFunction)
-    TestPlugin_get_sample;
+    TemplatePlugin_get_sample;
     plugin->returnSampleFnc =
     (PRESTypePluginReturnSampleFunction)
-    TestPlugin_return_sample;
+    TemplatePlugin_return_sample;
 
     plugin->getKeyKindFnc =
     (PRESTypePluginGetKeyKindFunction)
-    TestPlugin_get_key_kind;
+    TemplatePlugin_get_key_kind;
 
     /* These functions are only used for keyed types. As this is not a keyed
     type they are all set to NULL
@@ -988,28 +988,28 @@ struct PRESTypePlugin *TestPlugin_new(void)
     plugin->instanceToKeyHashFnc = NULL;
     plugin->serializedSampleToKeyHashFnc = NULL;
     plugin->serializedKeyToKeyHashFnc = NULL;    
-    plugin->typeCode =  (struct RTICdrTypeCode *)Test_get_typecode();
+    plugin->typeCode =  (struct RTICdrTypeCode *)Template_get_typecode();
 
     plugin->languageKind = PRES_TYPEPLUGIN_CPP_LANG;
 
     /* Serialized buffer */
     plugin->getBuffer = 
     (PRESTypePluginGetBufferFunction)
-    TestPlugin_get_buffer;
+    TemplatePlugin_get_buffer;
     plugin->returnBuffer = 
     (PRESTypePluginReturnBufferFunction)
-    TestPlugin_return_buffer;
+    TemplatePlugin_return_buffer;
     plugin->getSerializedSampleSizeFnc =
     (PRESTypePluginGetSerializedSampleSizeFunction)
-    TestPlugin_get_serialized_sample_size;
+    TemplatePlugin_get_serialized_sample_size;
 
-    plugin->endpointTypeName = TestTYPENAME;
+    plugin->endpointTypeName = TemplateTYPENAME;
 
     return plugin;
 }
 
 void
-TestPlugin_delete(struct PRESTypePlugin *plugin)
+TemplatePlugin_delete(struct PRESTypePlugin *plugin)
 {
     RTIOsapiHeap_freeStructure(plugin);
 } 

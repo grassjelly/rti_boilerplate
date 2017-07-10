@@ -2,17 +2,17 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from Sensors.idl using "rtiddsgen".
+This file was generated from Template.idl using "rtiddsgen".
 The rtiddsgen tool is part of the RTI Connext distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-#ifndef SensorsSupport_1082808640_h
-#define SensorsSupport_1082808640_h
+#ifndef TemplateSupport_812788977_h
+#define TemplateSupport_812788977_h
 
 /* Uses */
-#include "Sensors.h"
+#include "Template.h"
 
 #ifndef ndds_cpp_h
 #include "ndds/ndds_cpp.h"
@@ -44,10 +44,10 @@ implementing generics in C and C++.
 
 #endif
 
-DDS_TYPESUPPORT_CPP(TestTypeSupport, Test);
+DDS_TYPESUPPORT_CPP(TemplateTypeSupport, Template);
 
-DDS_DATAWRITER_CPP(TestDataWriter, Test);
-DDS_DATAREADER_CPP(TestDataReader, TestSeq, Test);
+DDS_DATAWRITER_CPP(TemplateDataWriter, Template);
+DDS_DATAREADER_CPP(TemplateDataReader, TemplateSeq, Template);
 
 #if (defined(RTI_WIN32) || defined (RTI_WINCE)) && defined(NDDS_USER_DLL_EXPORT)
 /* If the code is building on Windows, stop exporting symbols.
@@ -56,5 +56,5 @@ DDS_DATAREADER_CPP(TestDataReader, TestSeq, Test);
 #define NDDSUSERDllExport
 #endif
 
-#endif  /* SensorsSupport_1082808640_h */
+#endif  /* TemplateSupport_812788977_h */
 

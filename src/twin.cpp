@@ -1,24 +1,28 @@
+#include "Boilerplate.h"
 #include "ndds/ndds_cpp.h"
+#include "TemplateBoilerplate.h"
 #include "SensorsBoilerplate.h"
 
 #define DOMAIN_ID 0
 
 int main(int argc, char *argv[])
 {
-    DDS_Duration_t send_period = {1,0};
+    DDS_Duration_t send_period = {0,100000000};
         
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);
 
-    SensorsMsg::Publisher pub1(participant, "Example Sensors3");
+    TemplateMsg::Publisher pub1(participant, "Example Template3");
     pub1.instance->id = "3";
 
-    SensorsMsg::Publisher pub2(participant, "Example Sensors4");
+    TemplateMsg::Publisher pub2(participant, "Example Template4");
     pub2.instance->id = "4";
 
-    SensorsMsg::Subscriber sub1(participant, "Example Sensors1");
+    TemplateMsg::Subscriber sub1(participant, "Example Template1");
 
-    SensorsMsg::Subscriber sub2(participant, "Example Sensors2");
+    TemplateMsg::Subscriber sub2(participant, "Example Template2");
+
+    TestMsg::Subscriber sub3(participant, "Example Template5");
 
     static int counter = 0;
     for(;;){
@@ -34,6 +38,13 @@ int main(int argc, char *argv[])
             if (sub2.get_info_seq()[i].valid_data) {
                 float sensor_val = sub2.get_data_seq()[i].value;
                 printf("Value2: %f\n", sensor_val);
+            }
+        }
+
+        for (int i = 0; i < sub3.get_data_seq().length(); ++i) {
+            if (sub3.get_info_seq()[i].valid_data) {
+                float sensor_val = sub3.get_data_seq()[i].value;
+                printf("Value5: %f\n", sensor_val);
             }
         }
 

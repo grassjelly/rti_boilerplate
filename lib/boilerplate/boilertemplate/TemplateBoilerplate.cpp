@@ -1,8 +1,8 @@
 #include "Boilerplate.h"
-#include "SensorsBoilerplate.h"
-#include "SensorsSupport.h"
+#include "TemplateBoilerplate.h"
+#include "TemplateSupport.h"
 
-TestMsg::Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
+Template_TYPE_Msg::Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
     boiler_object_ = boiler_object;
@@ -10,12 +10,12 @@ TestMsg::Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_
     init_publisher();
 }
 
-int TestMsg::Publisher::init_publisher()
+int Template_TYPE_Msg::Publisher::init_publisher()
 {
     DDSPublisher *publisher;
     DDSTopic *topic = NULL;
     DDSDataWriter *writer = NULL;
-    Test_writer_ = NULL;
+    Template_TYPE__writer_ = NULL;
     instance = NULL;
     instance_handle_ = DDS_HANDLE_NIL;
     const char *type_name = NULL;
@@ -31,8 +31,8 @@ int TestMsg::Publisher::init_publisher()
     }
     
     /* Register type before creating topic */
-    type_name = TestTypeSupport::get_type_name();
-    retcode_ = TestTypeSupport::register_type(
+    type_name = Template_TYPE_TypeSupport::get_type_name();
+    retcode_ = Template_TYPE_TypeSupport::register_type(
         participant_, type_name);
     if (retcode_ != DDS_RETCODE_OK) {
         printf("register_type error %d\n", retcode_);
@@ -64,42 +64,42 @@ int TestMsg::Publisher::init_publisher()
         return -1;
     }
 
-    Test_writer_ = TestDataWriter::narrow(writer);
-    if (Test_writer_ == NULL) {
+    Template_TYPE__writer_ = Template_TYPE_DataWriter::narrow(writer);
+    if (Template_TYPE__writer_ == NULL) {
         printf("DataWriter narrow error\n");
         boiler_object_->node_shutdown();
         return -1;
     }
 
     /* Create data sample for writing */
-    instance = TestTypeSupport::create_data();
+    instance = Template_TYPE_TypeSupport::create_data();
     if (instance == NULL) {
-        printf("TestTypeSupport::create_data error\n");
+        printf("Template_TYPE_TypeSupport::create_data error\n");
         boiler_object_->node_shutdown();
         return -1;
     }
 }
 
-void TestMsg::Publisher::publish(){
-    retcode_ = Test_writer_->write(*instance, instance_handle_);
+void Template_TYPE_Msg::Publisher::publish(){
+    retcode_ = Template_TYPE__writer_->write(*instance, instance_handle_);
 
     if (retcode_ != DDS_RETCODE_OK) {
         printf("write error %d\n", retcode_);
     }
 }
 
-int TestMsg::Publisher::kill()
+int Template_TYPE_Msg::Publisher::kill()
 {
-    retcode_ = TestTypeSupport::delete_data(instance);
+    retcode_ = Template_TYPE_TypeSupport::delete_data(instance);
     if (retcode_ != DDS_RETCODE_OK) {
-        printf("TestTypeSupport::delete_data error %d\n", retcode_);
+        printf("Template_TYPE_TypeSupport::delete_data error %d\n", retcode_);
     }
 
     /* Delete all entities */
     return boiler_object_->node_shutdown();
 }
 
-TestMsg::Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic)
+Template_TYPE_Msg::Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic)
 {
     user_topic_ = user_topic;
     boiler_object_ = boiler_object;
@@ -107,21 +107,21 @@ TestMsg::Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * use
     init_subscriber();
 }
 
-void TestMsg::TestListener::on_data_available(DDSDataReader* reader) 
+void Template_TYPE_Msg::Template_TYPE_Listener::on_data_available(DDSDataReader* reader) 
 {
-    TestDataReader *Test_reader = NULL;
-    TestSeq data_seq_;
+    Template_TYPE_DataReader *Template_TYPE__reader = NULL;
+    Template_TYPE_Seq data_seq_;
     DDS_SampleInfoSeq info_seq_;    
     DDS_ReturnCode_t retcode;
     int i;
 
-    Test_reader = TestDataReader::narrow(reader);
-    if (Test_reader == NULL) {
+    Template_TYPE__reader = Template_TYPE_DataReader::narrow(reader);
+    if (Template_TYPE__reader == NULL) {
         printf("DataReader narrow error\n");
         return;
     }
 
-    retcode = Test_reader->take(
+    retcode = Template_TYPE__reader->take(
         data_seq_, info_seq_, DDS_LENGTH_UNLIMITED,
         DDS_ANY_SAMPLE_STATE, DDS_ANY_VIEW_STATE, DDS_ANY_INSTANCE_STATE);
 
@@ -139,17 +139,17 @@ void TestMsg::TestListener::on_data_available(DDSDataReader* reader)
     //     if (info_seq_[i].valid_data) {
     //         std::cout << info_seq_[i].valid_data << std::endl;
     //         //printf("Received data\n");
-    //         //TestTypeSupport::print_data(&data_seq[i]);
+    //         //Template_TYPE_TypeSupport::print_data(&data_seq[i]);
     //     }
     // }
 
-    retcode = Test_reader->return_loan(data_seq_, info_seq_);
+    retcode = Template_TYPE__reader->return_loan(data_seq_, info_seq_);
     if (retcode != DDS_RETCODE_OK) {
         printf("return loan error %d\n", retcode);
     }
 }
 
-int TestMsg::Subscriber::init_subscriber()
+int Template_TYPE_Msg::Subscriber::init_subscriber()
 {
     DDSSubscriber *subscriber;
     DDSTopic *topic = NULL;
@@ -167,8 +167,8 @@ int TestMsg::Subscriber::init_subscriber()
     }
     
     /* Register type before creating topic */
-    type_name = TestTypeSupport::get_type_name();
-    retcode_ = TestTypeSupport::register_type(
+    type_name = Template_TYPE_TypeSupport::get_type_name();
+    retcode_ = Template_TYPE_TypeSupport::register_type(
         participant_, type_name);
     if (retcode_ != DDS_RETCODE_OK) {
         printf("register_type error %d\n", retcode_);
@@ -189,7 +189,7 @@ int TestMsg::Subscriber::init_subscriber()
     }
 
     /* Create a data reader listener */
-    reader_listener_ = new TestListener();
+    reader_listener_ = new Template_TYPE_Listener();
         /* To customize data writer QoS, use 
     the configuration file USER_QOS_PROFILES.xml */
     reader = subscriber->create_datareader(
@@ -203,17 +203,17 @@ int TestMsg::Subscriber::init_subscriber()
     }
 }
 
-TestSeq TestMsg::Subscriber::get_data_seq()
+Template_TYPE_Seq Template_TYPE_Msg::Subscriber::get_data_seq()
 {
     return reader_listener_->data_seq;
 }
 
-DDS_SampleInfoSeq TestMsg::Subscriber::get_info_seq()
+DDS_SampleInfoSeq Template_TYPE_Msg::Subscriber::get_info_seq()
 {
     return reader_listener_->info_seq;
 }
 
-int TestMsg::Subscriber::kill()
+int Template_TYPE_Msg::Subscriber::kill()
 {
     int status = boiler_object_->node_shutdown();
     delete reader_listener_;

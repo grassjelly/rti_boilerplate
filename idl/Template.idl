@@ -1,5 +1,4 @@
-// HelloWorld.idl
-struct Test
+struct Template
 {
     string<50> id;
     string<50> type;

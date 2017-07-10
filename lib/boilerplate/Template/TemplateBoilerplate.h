@@ -1,16 +1,16 @@
-#ifndef Sensors_BOILERPLATE_H
-#define Sensors_BOILERPLATE_H
+#ifndef Template_BOILERPLATE_H
+#define Template_BOILERPLATE_H
 #include "Boilerplate.h"
-#include "Sensors.h"
+#include "Template.h"
 #include "ndds/ndds_cpp.h"
 
-namespace TestMsg
+namespace TemplateMsg
 {
     class Publisher 
     {
         public:
             Publisher(DDSBoilerplate * boiler_object, char const * user_topic);
-            Test *instance;
+            Template *instance;
             int init_publisher();
             void publish();
             int kill();
@@ -19,12 +19,12 @@ namespace TestMsg
             char const * user_topic_;
             DDSBoilerplate * boiler_object_;
             DDSDomainParticipant *participant_;
-            TestDataWriter * Test_writer_;
+            TemplateDataWriter * Template_writer_;
             DDS_ReturnCode_t retcode_;
             DDS_InstanceHandle_t instance_handle_ ;
     };
 
-    class TestListener : public DDSDataReaderListener 
+    class TemplateListener : public DDSDataReaderListener 
     {
         public:
             virtual void on_requested_deadline_missed(
@@ -53,7 +53,7 @@ namespace TestMsg
 
             virtual void on_data_available(DDSDataReader* reader);
 
-            TestSeq data_seq;
+            TemplateSeq data_seq;
             DDS_SampleInfoSeq info_seq;
     };
 
@@ -63,14 +63,14 @@ namespace TestMsg
             Subscriber(DDSBoilerplate * boiler_object, char const * user_topic);
             int init_subscriber();
             int kill();
-            TestSeq get_data_seq();
+            TemplateSeq get_data_seq();
             DDS_SampleInfoSeq get_info_seq();
 
         private:
             char const * user_topic_;
             DDSBoilerplate * boiler_object_;
             DDSDomainParticipant *participant_;
-            TestListener *reader_listener_;
+            TemplateListener *reader_listener_;
             DDS_ReturnCode_t retcode_;
     };
 }

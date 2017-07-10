@@ -2,14 +2,14 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from Sensors.idl using "rtiddsgen".
+This file was generated from Template.idl using "rtiddsgen".
 The rtiddsgen tool is part of the RTI Connext distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-#include "SensorsSupport.h"
-#include "SensorsPlugin.h"
+#include "TemplateSupport.h"
+#include "TemplatePlugin.h"
 
 #ifndef dds_c_log_impl_h              
 #include "dds_c/dds_c_log_impl.h"                                
@@ -24,7 +24,7 @@ TDataWriter,
 TDataReader,
 TTypeSupport
 
-Configure and implement 'Test' support classes.
+Configure and implement 'Template' support classes.
 
 Note: Only the #defined classes get defined
 */
@@ -40,11 +40,11 @@ Defines:   TDataWriter, TData
 */
 
 /* Requires */
-#define TTYPENAME   TestTYPENAME
+#define TTYPENAME   TemplateTYPENAME
 
 /* Defines */
-#define TDataWriter TestDataWriter
-#define TData       Test
+#define TDataWriter TemplateDataWriter
+#define TData       Template
 
 #include "dds_cpp/generic/dds_cpp_data_TDataWriter.gen"
 
@@ -64,12 +64,12 @@ Defines:   TDataReader, TDataSeq, TData
 */
 
 /* Requires */
-#define TTYPENAME   TestTYPENAME
+#define TTYPENAME   TemplateTYPENAME
 
 /* Defines */
-#define TDataReader TestDataReader
-#define TDataSeq    TestSeq
-#define TData       Test
+#define TDataReader TemplateDataReader
+#define TDataSeq    TemplateSeq
+#define TData       Template
 
 #include "dds_cpp/generic/dds_cpp_data_TDataReader.gen"
 
@@ -91,15 +91,15 @@ Defines:   TTypeSupport, TData, TDataReader, TDataWriter
 */
 
 /* Requires */
-#define TTYPENAME    TestTYPENAME
-#define TPlugin_new  TestPlugin_new
-#define TPlugin_delete  TestPlugin_delete
+#define TTYPENAME    TemplateTYPENAME
+#define TPlugin_new  TemplatePlugin_new
+#define TPlugin_delete  TemplatePlugin_delete
 
 /* Defines */
-#define TTypeSupport TestTypeSupport
-#define TData        Test
-#define TDataReader  TestDataReader
-#define TDataWriter  TestDataWriter
+#define TTypeSupport TemplateTypeSupport
+#define TData        Template
+#define TDataReader  TemplateDataReader
+#define TDataWriter  TemplateDataWriter
 #define TGENERATE_SER_CODE
 #define TGENERATE_TYPECODE
 

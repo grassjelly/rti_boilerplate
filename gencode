@@ -1,40 +1,38 @@
 #!/usr/bin/env bash
+FILES=idl/*.idl
+#check all the idl files in idl folder
+for f in $FILES
+	do
+		#get message type from idl file
+		MESSAGE_TYPE=$(awk '{for(i=1;i<=NF;i++) if ($i=="struct") print $(i+1)}' $f)
+		#get the IDL filename for
+		IDL_NAME=$(basename $f .idl)
+		
+		#create the folder based on the idl file for code generation
+		MSG_LIBRARY=lib/boilerplate/$IDL_NAME
+		mkdir -p $MSG_LIBRARY
 
-#delete previous gencode
-rm lib/gen/*.h
-rm lib/gen/*.cxx
-rm lib/gen/*.xml
+		#copy the boilerplate templates on the created folder
+		cp lib/boilerplate/boilertemplate/TemplateBoilerplate.cpp $MSG_LIBRARY
+		cp lib/boilerplate/boilertemplate/TemplateBoilerplate.h $MSG_LIBRARY
+		cp lib/boilerplate/boilertemplate/CMakeLists.txt $MSG_LIBRARY
+		
+		#parse the template and replace template msg to current message define in the idl file
+		perl -pi -e "s/Template_TYPE_/$MESSAGE_TYPE/g" $MSG_LIBRARY/TemplateBoilerplate.cpp
+		#parse template header files and replace with current idl filename
+		perl -pi -e "s/Template/$IDL_NAME/g" $MSG_LIBRARY/TemplateBoilerplate.cpp
 
-#get the new idl file created
-CURRENT_IDL=$(basename ./idl/*.idl .idl)
-#get prev idl file 
-PREV_IDL=$(head -n 1 gencode.cache)
+		perl -pi -e "s/Template_TYPE_/$MESSAGE_TYPE/g" $MSG_LIBRARY/TemplateBoilerplate.h
+		perl -pi -e "s/Template/$IDL_NAME/g" $MSG_LIBRARY/TemplateBoilerplate.h
 
-#generate codes
-cd lib/gen
-rtiddsgen -replace -language C++ -example x64Linux3gcc4.8.2 ../../idl/*.idl -d ./
+		#parse the template and replace with current idl filename
+		perl -pi -e "s/Template/$IDL_NAME/g" $MSG_LIBRARY/CMakeLists.txt
 
-cd ../..
-#change the filenames on CMakeLists based on newly generated codes
-perl -pi -e "s/$PREV_IDL/$CURRENT_IDL/g" CMakeLists.txt
+		#rename boilerplates from template filename to idl filename
+		mv $MSG_LIBRARY/TemplateBoilerplate.cpp $MSG_LIBRARY/${IDL_NAME}Boilerplate.cpp
+		mv $MSG_LIBRARY/TemplateBoilerplate.h $MSG_LIBRARY/${IDL_NAME}Boilerplate.h
 
-#change library name based on idl
-perl -pi -e "s/$PREV_IDL_lib/$CURRENT_IDL_lib/g" CMakeLists.txt
+		#generate codes
+		rtiddsgen -replace -language C++ -example x64Linux3gcc4.8.2 idl/${IDL_NAME}.idl -d $MSG_LIBRARY
 
-
-#store the previous idl name so the bash file knows what to replace next call
-perl -pi -e "s/$PREV_IDL/$CURRENT_IDL/g" gencode.cache
-
-#move generated header files to include folder
-if [ ! -d "include" ]; then
-	mkdir include
-fi
-
-
-#delete created makefile
-rm	lib/gen/make*
-
-rm -rf build
-mkdir build
-
-./compile
+	done

@@ -25,8 +25,7 @@ include_directories(
   ${NDDSHOME}/include
   ${NDDSHOME}/include/ndds
   include
-  lib/boilerplate/Sensors
-  lib/boilerplate
+  lib/boilerplate/boilerplate
 )
 
 add_definitions(-DRTI_UNIX -ldl)
@@ -37,96 +36,32 @@ elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "armv7l")
   link_directories(${NDDSHOME}/lib/armv6vfphLinux3.xgcc4.7.2)
 endif()
 
-add_library(Boilerplate_lib 
-  lib/boilerplate/Boilerplate.cpp
-)
-
-target_link_libraries(Boilerplate_lib 
-  nddsc    
-  nddscpp
-  nddscore
-  # ${CMAKE_DL_LIBS}  # ${CMAKE_DL_LIBS}
-)
-
-add_library(Sensors_lib 
-  lib/boilerplate/Sensors/Sensors.cxx
-  lib/boilerplate/Sensors/SensorsPlugin.cxx
-  lib/boilerplate/Sensors/SensorsSupport.cxx
-)
-
-target_link_libraries(Sensors_lib 
-  nddsc    
-  nddscpp
-  nddscore
-  # ${CMAKE_DL_LIBS}  # ${CMAKE_DL_LIBS}
-)
-
-# add_executable(publisher
-#   lib/boilerplate/Sensors/Sensors_publisher.cxx
-# )
-
-# target_link_libraries(publisher
-#   Sensors_lib
-# )
-
-# add_executable(subscriber
-#   lib/boilerplate/Sensors/Sensors_subscriber.cxx
-# )
-
-# target_link_libraries(subscriber
-#   Sensors_lib
-# )
-
 file(GLOB BOILERPLATE_SOURCE
-  lib/boilerplate/Boilerplate.cpp
+  lib/boilerplate/boilerplate/Boilerplate.cpp
 )
 
-file(GLOB SENSORS_SOURCE 
-  lib/boilerplate/Sensors/Sensors.cxx
-  lib/boilerplate/Sensors/*Plugin.cxx
-  lib/boilerplate/Sensors/*Support.cxx
-  lib/boilerplate/Sensors/*Boilerplate.cpp
-)
-
-
-# add_executable(main
-
-#   src/main.cpp
- 
-# )
-
-# target_link_libraries(main 
-#   Sensors_lib
-
-#   Boilerplate_lib
-#   ${CMAKE_DL_LIBS}  # ${CMAKE_DL_LIBS}
-# )
-
-add_library(lib
-  ${BOILERPLATE_SOURCE}
-  ${SENSORS_SOURCE}
-)
-
-target_link_libraries(lib 
-  nddsc    
-  nddscpp
-  nddscore
-  ${CMAKE_DL_LIBS} 
-)
-
+include(lib/boilerplate/Template/CMakeLists.txt)
+include(lib/boilerplate/Sensors/CMakeLists.txt)
 
 add_executable(main
   src/main.cpp
+  ${BOILERPLATE_SOURCE}
+  ${SOURCE_Template}
+  ${SOURCE_Sensors}
 )
 
 target_link_libraries(main 
-  lib
+  nddsc    
+  nddscpp
+  nddscore
+  ${CMAKE_DL_LIBS}  
 )
 
 add_executable(twin
   src/twin.cpp
   ${BOILERPLATE_SOURCE}
-  ${SENSORS_SOURCE}
+   ${SOURCE_Template}
+  ${SOURCE_Sensors}
 )
 
 target_link_libraries(twin 
@@ -135,4 +70,3 @@ target_link_libraries(twin
   nddscore
   ${CMAKE_DL_LIBS}  
 )
-

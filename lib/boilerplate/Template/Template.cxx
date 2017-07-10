@@ -3,7 +3,7 @@
 /*
 WARNING: THIS FILE IS AUTO-GENERATED. DO NOT MODIFY.
 
-This file was generated from Sensors.idl using "rtiddsgen".
+This file was generated from Template.idl using "rtiddsgen".
 The rtiddsgen tool is part of the RTI Connext distribution.
 For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
@@ -28,18 +28,18 @@ or consult the RTI Connext manual.
 #include "ndds_standalone_type.h"
 #endif
 
-#include "Sensors.h"
+#include "Template.h"
 
 /* ========================================================================= */
-const char *TestTYPENAME = "Test";
+const char *TemplateTYPENAME = "Template";
 
-DDS_TypeCode* Test_get_typecode()
+DDS_TypeCode* Template_get_typecode()
 {
     static RTIBool is_initialized = RTI_FALSE;
 
-    static DDS_TypeCode Test_g_tc_id_string = DDS_INITIALIZE_STRING_TYPECODE((50));
-    static DDS_TypeCode Test_g_tc_type_string = DDS_INITIALIZE_STRING_TYPECODE((50));
-    static DDS_TypeCode_Member Test_g_tc_members[3]=
+    static DDS_TypeCode Template_g_tc_id_string = DDS_INITIALIZE_STRING_TYPECODE((50));
+    static DDS_TypeCode Template_g_tc_type_string = DDS_INITIALIZE_STRING_TYPECODE((50));
+    static DDS_TypeCode_Member Template_g_tc_members[3]=
     {
 
         {
@@ -95,43 +95,43 @@ DDS_TypeCode* Test_get_typecode()
         }
     };
 
-    static DDS_TypeCode Test_g_tc =
+    static DDS_TypeCode Template_g_tc =
     {{
             DDS_TK_STRUCT,/* Kind */
             DDS_BOOLEAN_FALSE, /* Ignored */
             -1, /*Ignored*/
-            (char *)"Test", /* Name */
+            (char *)"Template", /* Name */
             NULL, /* Ignored */      
             0, /* Ignored */
             0, /* Ignored */
             NULL, /* Ignored */
             3, /* Number of members */
-            Test_g_tc_members, /* Members */
+            Template_g_tc_members, /* Members */
             DDS_VM_NONE  /* Ignored */         
-        }}; /* Type code for Test*/
+        }}; /* Type code for Template*/
 
     if (is_initialized) {
-        return &Test_g_tc;
+        return &Template_g_tc;
     }
 
-    Test_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&Test_g_tc_id_string;
+    Template_g_tc_members[0]._representation._typeCode = (RTICdrTypeCode *)&Template_g_tc_id_string;
 
-    Test_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&Test_g_tc_type_string;
+    Template_g_tc_members[1]._representation._typeCode = (RTICdrTypeCode *)&Template_g_tc_type_string;
 
-    Test_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_float;
+    Template_g_tc_members[2]._representation._typeCode = (RTICdrTypeCode *)&DDS_g_tc_float;
 
     is_initialized = RTI_TRUE;
 
-    return &Test_g_tc;
+    return &Template_g_tc;
 }
 
-RTIBool Test_initialize(
-    Test* sample) {
-    return Test_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
+RTIBool Template_initialize(
+    Template* sample) {
+    return Template_initialize_ex(sample,RTI_TRUE,RTI_TRUE);
 }
 
-RTIBool Test_initialize_ex(
-    Test* sample,RTIBool allocatePointers, RTIBool allocateMemory)
+RTIBool Template_initialize_ex(
+    Template* sample,RTIBool allocatePointers, RTIBool allocateMemory)
 {
 
     struct DDS_TypeAllocationParams_t allocParams =
@@ -140,13 +140,13 @@ RTIBool Test_initialize_ex(
     allocParams.allocate_pointers =  (DDS_Boolean)allocatePointers;
     allocParams.allocate_memory = (DDS_Boolean)allocateMemory;
 
-    return Test_initialize_w_params(
+    return Template_initialize_w_params(
         sample,&allocParams);
 
 }
 
-RTIBool Test_initialize_w_params(
-    Test* sample, const struct DDS_TypeAllocationParams_t * allocParams)
+RTIBool Template_initialize_w_params(
+    Template* sample, const struct DDS_TypeAllocationParams_t * allocParams)
 {
 
     if (allocParams) {} /* To avoid warnings */
@@ -182,15 +182,15 @@ RTIBool Test_initialize_w_params(
     return RTI_TRUE;
 }
 
-void Test_finalize(
-    Test* sample)
+void Template_finalize(
+    Template* sample)
 {
 
-    Test_finalize_ex(sample,RTI_TRUE);
+    Template_finalize_ex(sample,RTI_TRUE);
 }
 
-void Test_finalize_ex(
-    Test* sample,RTIBool deletePointers)
+void Template_finalize_ex(
+    Template* sample,RTIBool deletePointers)
 {
     struct DDS_TypeDeallocationParams_t deallocParams =
     DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
@@ -201,12 +201,12 @@ void Test_finalize_ex(
 
     deallocParams.delete_pointers = (DDS_Boolean)deletePointers;
 
-    Test_finalize_w_params(
+    Template_finalize_w_params(
         sample,&deallocParams);
 }
 
-void Test_finalize_w_params(
-    Test* sample,const struct DDS_TypeDeallocationParams_t * deallocParams)
+void Template_finalize_w_params(
+    Template* sample,const struct DDS_TypeDeallocationParams_t * deallocParams)
 {
 
     if (sample==NULL) {
@@ -227,8 +227,8 @@ void Test_finalize_w_params(
 
 }
 
-void Test_finalize_optional_members(
-    Test* sample, RTIBool deletePointers)
+void Template_finalize_optional_members(
+    Template* sample, RTIBool deletePointers)
 {
     struct DDS_TypeDeallocationParams_t deallocParamsTmp =
     DDS_TYPE_DEALLOCATION_PARAMS_DEFAULT;
@@ -245,9 +245,9 @@ void Test_finalize_optional_members(
 
 }
 
-RTIBool Test_copy(
-    Test* dst,
-    const Test* src)
+RTIBool Template_copy(
+    Template* dst,
+    const Template* src)
 {
 
     if (!RTICdrType_copyStringEx (
@@ -273,13 +273,13 @@ RTIBool Test_copy(
 *
 * Defines:  TSeq, T
 *
-* Configure and implement 'Test' sequence class.
+* Configure and implement 'Template' sequence class.
 */
-#define T Test
-#define TSeq TestSeq
-#define T_initialize_w_params Test_initialize_w_params
-#define T_finalize_w_params   Test_finalize_w_params
-#define T_copy       Test_copy
+#define T Template
+#define TSeq TemplateSeq
+#define T_initialize_w_params Template_initialize_w_params
+#define T_finalize_w_params   Template_finalize_w_params
+#define T_copy       Template_copy
 
 #ifndef NDDS_STANDALONE_TYPE
 #include "dds_c/generic/dds_c_sequence_TSeq.gen"

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 FILES=idl/*.idl
 #check all the idl files in idl folder
+
+./cleangen
+ 
 for f in $FILES
 	do
 		#get message type from idl file

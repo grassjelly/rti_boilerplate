@@ -1,5 +1,7 @@
-#include "ndds/ndds_cpp.h"
 #include "Boilerplate.h"
+#include "SensorsBoilerplate.h"
+#include "ndds/ndds_cpp.h"
+
 
 #define DOMAIN_ID 0
 

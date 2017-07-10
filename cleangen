@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+FOLDERS=lib/boilerplate/*
+
+for f in $FOLDERS
+	do		
+        FOLDER_NAME=$(basename $f)
+        if [[ $FOLDER_NAME != "boilerplate" && $FOLDER_NAME != "boilertemplate" ]]
+            then
+                echo "Deleting" $FOLDER_NAME "folder"
+                rm -rf lib/boilerplate/$FOLDER_NAME
+        fi
+done

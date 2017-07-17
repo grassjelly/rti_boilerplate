@@ -213,6 +213,17 @@ DDS_SampleInfoSeq Template_TYPE_Msg::Subscriber::get_info_seq()
     return reader_listener_->info_seq;
 }
 
+bool Template_TYPE_Msg::Subscriber::is_read()
+{
+    for (int i = 0; i <reader_listener_->info_seq.length(); ++i){
+        if(reader_listener_->info_seq[i].sample_state == DDS_READ_SAMPLE_STATE){
+            return true;
+        }
+        reader_listener_->info_seq[i].sample_state = DDS_READ_SAMPLE_STATE;
+    }
+    return false;
+}
+
 int Template_TYPE_Msg::Subscriber::kill()
 {
     int status = boiler_object_->node_shutdown();

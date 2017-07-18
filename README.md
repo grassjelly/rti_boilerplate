@@ -64,3 +64,14 @@ TemplateMsg can be any message based on the idl file you have created.
                 printf("Value3: %f\n", sensor_val);
             }
         }
+
+7. Subscribing and receiving data with is_read() - Take note that the for loop uses `get_info_seq().length()`:
+
+        if(!sub1.is_read()){
+            for (int i = 0; i < sub1.get_info_seq().length(); i++) {
+                if (sub1.get_info_seq()[i].valid_data) {
+                    float sensor_val = sub1.get_data_seq()[i].value;
+                    printf("Value3: %f\n", sensor_val);
+                }
+            }
+        }

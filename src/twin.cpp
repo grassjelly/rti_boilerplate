@@ -27,24 +27,30 @@ int main(int argc, char *argv[])
     static int counter = 0;
     for(;;){
 
-        for (int i = 0; i < sub1.get_data_seq().length(); ++i) {
-            if (sub1.get_info_seq()[i].valid_data) {
-                float sensor_val = sub1.get_data_seq()[i].value;
-                printf("Value1: %f\n", sensor_val);
+        if(!sub1.is_read()){
+            for (int i = 0; i < sub1.get_data_seq().length(); ++i) {
+                if (sub1.get_info_seq()[i].valid_data) {
+                    float sensor_val = sub1.get_data_seq()[i].value;
+                    printf("Value1: %f\n", sensor_val);
+                }
             }
         }
 
-        for (int i = 0; i < sub2.get_data_seq().length(); ++i) {
-            if (sub2.get_info_seq()[i].valid_data) {
-                float sensor_val = sub2.get_data_seq()[i].value;
-                printf("Value2: %f\n", sensor_val);
+        if(!sub2.is_read()){
+            for (int i = 0; i < sub2.get_data_seq().length(); ++i) {
+                if (sub2.get_info_seq()[i].valid_data) {
+                    float sensor_val = sub2.get_data_seq()[i].value;
+                    printf("Value2: %f\n", sensor_val);
+                }
             }
         }
 
-        for (int i = 0; i < sub3.get_data_seq().length(); ++i) {
-            if (sub3.get_info_seq()[i].valid_data) {
-                float sensor_val = sub3.get_data_seq()[i].value;
-                printf("Value5: %f\n", sensor_val);
+        if(!sub3.is_read()){
+            for (int i = 0; i < sub3.get_data_seq().length(); ++i) {
+                if (sub3.get_info_seq()[i].valid_data) {
+                    float sensor_val = sub3.get_data_seq()[i].value;
+                    printf("Value5: %f\n", sensor_val);
+                }
             }
         }
 

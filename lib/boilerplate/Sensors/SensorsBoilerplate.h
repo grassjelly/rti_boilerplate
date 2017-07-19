@@ -65,6 +65,7 @@ namespace TestMsg
             int kill();
             TestSeq get_data_seq();
             DDS_SampleInfoSeq get_info_seq();
+            bool is_read();
 
         private:
             char const * user_topic_;

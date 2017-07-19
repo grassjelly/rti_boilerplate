@@ -213,6 +213,19 @@ DDS_SampleInfoSeq TemplateMsg::Subscriber::get_info_seq()
     return reader_listener_->info_seq;
 }
 
+bool TemplateMsg::Subscriber::is_read()
+{
+    if(reader_listener_->info_seq.length()==0) //this condition fixes a bug with not receiving the first subscribed data.
+        return true;
+    for (int i = 0; i <reader_listener_->info_seq.length(); i++){
+        if(reader_listener_->info_seq[i].sample_state == DDS_READ_SAMPLE_STATE){
+            return true;
+        }
+        reader_listener_->info_seq[i].sample_state = DDS_READ_SAMPLE_STATE;
+    }
+    return false;
+}
+
 int TemplateMsg::Subscriber::kill()
 {
     int status = boiler_object_->node_shutdown();

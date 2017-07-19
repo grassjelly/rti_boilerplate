@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    DDS_Duration_t send_period = DDS_Duration_t::from_millis(1000);
+    DDS_Duration_t send_period = DDS_Duration_t::from_millis(100);
         
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);
@@ -16,14 +16,14 @@ int main(int argc, char *argv[])
 
     for(;;){
         //do something..
-
-        for (int i = 0; i < sub1.get_data_seq().length(); ++i) {
-            if (sub1.get_info_seq()[i].valid_data) {
-                float sensor_val = sub1.get_data_seq()[i].value;
-                printf("Received: %f\n", sensor_val);
+        if(!sub1.is_read()){
+            for (int i = 0; i < sub1.get_data_seq().length(); ++i) {
+                if (sub1.get_info_seq()[i].valid_data) {
+                    float sensor_val = sub1.get_data_seq()[i].value;
+                    printf("Received: %f\n", sensor_val);
+                }
             }
         }
-
         NDDSUtility::sleep(send_period);
     }
     delete participant;

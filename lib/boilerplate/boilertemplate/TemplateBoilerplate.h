@@ -65,6 +65,7 @@ namespace Template_TYPE_Msg
             int kill();
             Template_TYPE_Seq get_data_seq();
             DDS_SampleInfoSeq get_info_seq();
+            bool is_read();
 
         private:
             char const * user_topic_;

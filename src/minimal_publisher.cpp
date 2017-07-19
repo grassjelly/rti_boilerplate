@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    DDS_Duration_t send_period = DDS_Duration_t::from_millis(1000);
+    DDS_Duration_t send_period = DDS_Duration_t::from_millis(5000);
         
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);
@@ -16,13 +16,14 @@ int main(int argc, char *argv[])
     pub1.instance->id = (char*)"1";
 
     static float counter = 0;
-    for(;;){
-        //do something..
+           //do something..
 
+
+        
+    for(;;){
         pub1.instance->value = counter;
         pub1.publish(); 
         counter++;
-        
         NDDSUtility::sleep(send_period);
     }
     delete participant;

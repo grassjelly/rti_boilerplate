@@ -70,7 +70,7 @@ For more information about XML QoS Profiles see Chapter 17 in the
 RTI Connext user manual.
 -->
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:noNamespaceSchemaLocation="/home/juan/rti_connext_dds-5.2.3/resource/schema/rti_dds_qos_profiles.xsd"
+     xsi:noNamespaceSchemaLocation="/home/gds-emt/rti_connext_dds-5.2.3/resource/schema/rti_dds_qos_profiles.xsd"
      version="5.2.3">
     <!-- QoS Library containing the QoS profile used in the generated example.
 

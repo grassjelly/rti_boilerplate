@@ -1,6 +1,7 @@
 #include "Boilerplate.h"
 #include "TemplateBoilerplate.h"
 #include "TemplateSupport.h"
+#include <string> //ADDED
 
 Template_TYPE_Msg::Publisher::Publisher(DDSBoilerplate * boiler_object, char const * user_topic)
 {
@@ -233,3 +234,91 @@ int Template_TYPE_Msg::Subscriber::kill()
 
     return status;
 }
+
+Template_TYPE_Msg::Subscriber::Subscriber(DDSBoilerplate * boiler_object, char const * user_topic, char const * attribute) //ADDED
+{
+    user_topic_ = user_topic;
+    boiler_object_ = boiler_object;
+    participant_ = boiler_object_->get_participant_obj();
+    init_subscriber(attribute);
+}
+
+int Template_TYPE_Msg::Subscriber::init_subscriber(char const * attribute) //ADDED
+{
+    DDSSubscriber *subscriber;
+    DDSTopic *topic = NULL;
+    DDSDataReader *reader = NULL;
+    const char *type_name = NULL;
+
+    /* To customize publisher QoS, use 
+    the configuration file USER_QOS_PROFILES.xml */
+    subscriber = participant_->create_subscriber(
+        DDS_SUBSCRIBER_QOS_DEFAULT, NULL /* listener */, DDS_STATUS_MASK_NONE);
+    if (subscriber == NULL) {
+        printf("create_subscriber error\n");
+        boiler_object_->node_shutdown();
+        return -1;
+    }
+    
+    /* Register type before creating topic */
+    type_name = Template_TYPE_TypeSupport::get_type_name();
+    retcode_ = Template_TYPE_TypeSupport::register_type(
+        participant_, type_name);
+    if (retcode_ != DDS_RETCODE_OK) {
+        printf("register_type error %d\n", retcode_);
+        boiler_object_->node_shutdown();
+        return -1;
+    }
+
+/* To customize topic QoS, use 
+    the configuration file USER_QOS_PROFILES.xml */
+    topic = participant_->create_topic(
+        user_topic_,
+        type_name, DDS_TOPIC_QOS_DEFAULT, NULL /* listener */,
+        DDS_STATUS_MASK_NONE);    
+    if (topic == NULL) {
+        printf("create_topic error\n");
+        boiler_object_->node_shutdown();
+        return -1;
+    }
+
+     DDS_StringSeq parameters(1);
+    const char* param_list[] = {"HELLO"};
+    parameters.from_array(param_list, 1);
+
+    cft_ = NULL;
+
+    cft_ = participant_->create_contentfilteredtopic_with_filter(
+        user_topic_, topic, &((std::string(attribute)+std::string(" MATCH %0")).c_str())[0], parameters,
+        DDS_STRINGMATCHFILTER_NAME);
+    if (cft_ == NULL) {
+        printf("create_contentfilteredtopic error\n");
+        boiler_object_->node_shutdown();
+        return -1;
+    }
+    
+
+    /* Create a data reader listener */
+    reader_listener_ = new Template_TYPE_Listener();
+        /* To customize data writer QoS, use 
+    the configuration file USER_QOS_PROFILES.xml */
+    reader = subscriber->create_datareader(
+        cft_, DDS_DATAREADER_QOS_DEFAULT, reader_listener_ /* listener */,
+        DDS_STATUS_MASK_ALL);
+    if (reader == NULL) {
+        printf("create_datareader error\n");
+        boiler_object_->node_shutdown();
+        delete reader_listener_;
+        return -1;
+    }
+}
+
+void Template_TYPE_Msg::Subscriber::set_string_filter(char* filter) //ADDED
+{
+    retcode_ = cft_->append_to_expression_parameter(0, filter);
+    if (retcode_ != DDS_RETCODE_OK) {
+        printf("append_to_expression_parameter error\n");
+        boiler_object_->node_shutdown();
+    }
+}
+

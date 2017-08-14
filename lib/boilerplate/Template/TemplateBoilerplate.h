@@ -61,11 +61,14 @@ namespace TemplateMsg
     {
         public:
             Subscriber(DDSBoilerplate * boiler_object, char const * user_topic);
+            Subscriber(DDSBoilerplate * boiler_object, char const * user_topic, char const * attribute); //ADDED
             int init_subscriber();
+            int init_subscriber(char const * attribute); //ADDED
             int kill();
             TemplateSeq get_data_seq();
             DDS_SampleInfoSeq get_info_seq();
             bool is_read();
+            void set_string_filter(char* filter); //ADDED
 
         private:
             char const * user_topic_;
@@ -73,6 +76,7 @@ namespace TemplateMsg
             DDSDomainParticipant *participant_;
             TemplateListener *reader_listener_;
             DDS_ReturnCode_t retcode_;
+            DDSContentFilteredTopic *cft_;
     };
 }
 #endif

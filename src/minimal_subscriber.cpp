@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
     DDSBoilerplate * participant;
     participant = new DDSBoilerplate(DOMAIN_ID);
 
-    TemplateMsg::Subscriber sub1(participant, "Topic1");
+    TemplateMsg::Subscriber sub1(participant, "Topic1", "id");
+    sub1.set_string_filter((char *)"1");
 
     for(;;){
         //do something..
